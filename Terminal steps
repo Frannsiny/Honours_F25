@@ -1,0 +1,25 @@
+# in terminal: 
+
+ssh francine@fir.computecanada.ca
+# enter password (MRU)
+# 2FA
+
+# change into your directory
+cd def-sjsmith/francine
+
+# create environment with vcf tool in it 
+conda create -n vcftools -c bioconda vcftools
+
+# output:
+# To activate this environment, use
+#
+#     $ conda activate vcftools
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+# Note the difference base vs vcftools
+(base) [francine@login2 ~]$ conda activate vcftools
+(vcftools) [francine@login2 ~]$
+
