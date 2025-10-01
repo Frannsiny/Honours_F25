@@ -6,3 +6,11 @@ ssh francine@fir.computecanada.ca
 
 # change into your directory
 cd def-sjsmith/francine
+
+# to transfer files between HPC & computer
+sftp francine@fir.computecanada.ca
+# l needs to go in front of computer (local) commands e.g., lcd 
+# commands on HPC are the same e.g., cd 
+
+# `put <file>` copies file from computer to HPC
+# `get <file>` copies file from HPC to computer
