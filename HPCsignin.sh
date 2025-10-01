@@ -4,7 +4,7 @@ ssh francine@fir.computecanada.ca
 # enter password
 # 2FA
 
-# change into your directory
+# change into your directory (portal)
 cd def-sjsmith/francine
 
 # to transfer files between HPC & computer
