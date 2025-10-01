@@ -6,5 +6,3 @@ ssh francine@fir.computecanada.ca
 
 # change into your directory
 cd def-sjsmith/francine
-
-# adding new things
