@@ -1,0 +1,17 @@
+$ cd def-sjsmith/francine
+$ conda activate vcftools
+$ ls
+#GCA_006149115.2_Oner_1.1_genomic.fna  sk.het  sk.log  sockeye.vcf.gz
+.fna is a FASTA-format
+.net is a PLINK run log summarizing the options used and results. the .log is the output
+where am I? use pwd : 
+#/home/francine/def-sjsmith/francine
+create a tabix
+$ tabix -p vcf sockeye.vcf.gz
+# select a module?? STOP
+get the packages
+$ conda create -n vcfFilt -c bioconda plink vcftools htslib bcftools -y
+$ conda activate vcfFilt
+$(vcfFilt) [francine@login3 francine]$ mkdir vcf_filt
+mkdir: cannot create directory ‘vcf_filt’: Permission denied
+WHY?
