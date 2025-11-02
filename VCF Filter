@@ -26,3 +26,119 @@ $ conda activate vcfFilt
 $(vcfFilt) [francine@login3 francine]$ mkdir vcf_filt
 mkdir: cannot create directory ‘vcf_filt’: Permission denied
 WHY?
+ssh francine@fir.computecanada.ca
+# enter password (MRU)
+# 2FA
+
+# change into your directory
+cd def-sjsmith/francine
+permission denied 
+WHY??
+$ ls
+def-sjsmith  miniconda3  Miniconda3-latest-Linux-x86_64.sh  nearline  projects  scratch(vcftools) [francine@login3 ~]$ cd def-sjsmith
+(vcftools) [francine@login3 def-sjsmith]$ ls
+francine  francine_test  megan  prev_students  sjsmith  taylor
+(vcftools) [francine@login3 def-sjsmith]$ cd francine_test
+(vcftools) [francine@login3 francine_test]$ ls
+sockeye.vcf.gz  test.log  vcf_filt
+
+STEP 1
+keep SNPs remove indel (--remove-indels)
+drop sites with >= 50% missing (--max-missing 0.5)
+requires >= 3 copies of the minor allele ( --mac 3)
+require site QUAL >=30 (--minQ 30)
+save my results: folder: vcf_filt as filtstep1.recode.vcf
+
+$ vcftools --gzvcf sockeye.vcf.gz --remove-indels --max-missing 0.5 --mac 3 --minQ 30 --recode --recode-INFO-all --out vcf_filt/filtstep1
+
+output: filtstep1.recode.vcf and filtstep1.log
+
+#After filtering, kept 74 out of 74 Individuals
+#After filtering, kept 7286077 out of a possible 12813535 Sites
+
+
+STEP 2 
+convert low-depth genotype to missing DP >=3 ( --minDP 30)
+
+$vcftools --vcf vcf_filt/filtstep1.recode.vcf --minDP 3 --recode --recode-INFO-all --out vcf_filt/filtstep2
+
+create output vcf_filt/filtstep2.recode.vcf and filtstep2.log
+
+#After filtering, kept 74 out of 74 Individuals
+#After filtering, kept 14959 out of a possible 14959 Sites
+
+STEP 3
+Output missing individuals to remove  (--missing-ind)
+read Step 2 calculate how much data is missing per individual after I filtered and makes a report 
+
+$ vcftools --vcf vcf_filt/filtstep2.recode.vcf --missing-indv --out vcf_filt/filtstep3
+
+output filtstep3.recode.vcf and filtstep3.log and filtstep3.imiss(table of who is missing)
+
+#After filtering, kept 74 out of 74 Individuals
+#Outputting Individual Missingness
+#After filtering, kept 14290 out of a possible 14290 Sites
+#No individual removed
+
+STEP 4
+keep only biallelic SNPs ( --min-alleles 2 --max-alleles 2)
+Remark low depth genotypes as missing before counting (--minDP 3)
+keep a site only if ≥75% of individuals have a genotype present (--max-missing 0.75)
+
+$ vcftools --vcf vcf_filt/filtstep2.recode.vcf --min-alleles 2 --max-alleles 2 --max-missing 0.75 --minDP 3 --recode --recode-INFO-all --out vcf_filt/filtstep4
+
+output: filtstep4.recode.vcf and flitstep4.log
+
+#After filtering, kept 74 out of 74 Individuals
+#After filtering, kept 13873 out of a possible 14290 Sites
+
+STEP 5
+keep sites with minor-allele frequency >= 1%, remove the very rare sites ( --maf 0.01)
+any genotype with GQ < 10 becomes missing ( --minGQ 10)
+drop sites whose average depth across samples is > 200 (--max-meanDP 200)
+
+$  vcftools --vcf vcf_filt/filtstep4.recode.vcf --maf 0.01 --minGQ 10 --max-meanDP 200 --recode --recode-INFO-all --out vcf_filt/filtstep5
+
+output: filtstep5.recode.vcf and filtstep5.log
+
+#After filtering, kept 74 out of 74 Individuals
+#After filtering, kept 13873 out of a possible 13873 Sites
+
+STEP 6 
+Do it all
+
+
+$ vcftools --vcf vcf_filt/filtstep5.recode.vcf --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --maf 0.01 --minDP 3 --minGQ 10 --recode --recode-INFO-all --out vcf_filt/filtstep6
+
+output : filtstep6.recode.vcf  and filtstep6.log
+
+After filtering, kept 74 out of 74 Individuals
+Outputting VCF file...
+After filtering, kept 13873 out of a possible 13873 Sites
+
+Check how many SNP's
+$ grep -v '^#' vcf_filt/filtstep6.recode.vcf | wc -l
+0
+(vcftools) [francine@login3 francine_test]$ ls -lh vcf_filt/filtstep6.recode.vcf
+-rw-r----- 1 francine def-sjsmith 0 Nov  2 09:15 vcf_filt/filtstep6.recode.vcf
+Something is wrong!
+
+clean space 
+
+$ rm -f vcf_filt/filtstep1.recode.vcf vcf_filt/filtstep2.recode.vcf vcf_filt/filtstep3.recode.vcf vcf_filt/filtstep4.recode.vcf
+
+try again 
+$ vcftools --vcf vcf_filt/filtstep5.recode.vcf --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --maf 0.01 --minDP 3 --minGQ 10 --recode --recode-INFO-all --out vcf_filt/filtstep6
+$ grep -v '^#' vcf_filt/filtstep6.recode.vcf | wc -l
+# 13873
+
+
+Summary of the stock representation
+
+
+
+
+
+
+
+
