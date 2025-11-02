@@ -26,14 +26,21 @@ $ conda activate vcfFilt
 $(vcfFilt) [francine@login3 francine]$ mkdir vcf_filt
 mkdir: cannot create directory ‘vcf_filt’: Permission denied
 WHY?
+
+
+
+--------------------------------------------------
 ssh francine@fir.computecanada.ca
 # enter password (MRU)
 # 2FA
 
-# change into your directory
-cd def-sjsmith/francine
+# change into my directory
+$ conda activate vcftools
+$ cd def-sjsmith/francine
 permission denied 
 WHY??
+
+
 $ ls
 def-sjsmith  miniconda3  Miniconda3-latest-Linux-x86_64.sh  nearline  projects  scratch(vcftools) [francine@login3 ~]$ cd def-sjsmith
 (vcftools) [francine@login3 def-sjsmith]$ ls
@@ -132,10 +139,7 @@ $ vcftools --vcf vcf_filt/filtstep5.recode.vcf --remove-indels --min-alleles 2 -
 $ grep -v '^#' vcf_filt/filtstep6.recode.vcf | wc -l
 # 13873
 
-
-Summary of the stock representation
-
-
+----------------------------------------
 
 
 
