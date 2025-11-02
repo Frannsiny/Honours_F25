@@ -1,0 +1,92 @@
+
+Summary of the stock representation
+
+$ ssh francine@fir.computecanada.ca
+# enter password (MRU)
+# 2FA
+
+$ conda activate vcftools
+$ cd def-sjsmith/francine_test/vcf_filt
+
+#look what is indide the filtered vcf
+$ head -n 25 filtstep6.recode.vcf
+## I see many of these "##contig=<ID=CM016829.1,length=41065921>"
+
+"##" are metadata lines?
+#CHROM = column header
+variant rows
+
+# look back at the Genomic_concept inventory
+#try to look into the column header 
+$ grep '^#CHROM' filtstep6.recode.vcf
+
+# #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	Oner_Bowron_2014_409.merged.dedup.bam	Oner_Bowron_2014_411.merged.dedup.bam	Oner_Bowron_2014_412.merged.dedup.bam
+
+First 9 fields are the same "#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT"
+After are my samples:
+"Oner_Bowron_2014_409.merged.dedup.bam"
+Oner = spp ?
+Bowron = stock
+2014 = year 
+409 = ID
+.merge.dedup.bam = ??
+
+# try to see this separately
+turn each tab as a line
+$ grep '^#CHROM' filtstep6.recode.vcf | tr '\t' '\n'
+
+"#CHROM
+POS
+ID
+REF
+ALT
+QUAL
+FILTER
+INFO
+FORMAT
+Oner_Bowron_2014_409.merged.dedup.bam
+Oner_Bowron_2014_411.merged.dedup.bam
+Oner_Bowron_2014_412.merged.dedup.bam
+Oner_Bowron_2014_413.merged.dedup.bam
+Oner_Bowron_2014_414.merged.dedup.bam..."
+
+#try to save this so I can open on excel to do a table 
+$ grep '^#CHROM' filtstep6.recode.vcf | tr '\t' '\n' > header_columns.csv
+tr: write error: Disk quota exceeded
+#same problem as before remove something
+$rm -f filtstep5.recode.vcf 
+
+#try again
+$grep '^#CHROM' filtstep6.recode.vcf | tr '\t' '\n' > header_columns.csv
+
+#same problem, I don't want to remove anything else
+# search online for other options 
+#try SCRATCH
+
+$ echo $SCRATCH
+# make a folder
+$ mkdir -p $SCRATCH/vcf_tmp
+$ grep '^#CHROM' filtstep6.recode.vcf | tr '\t' '\n' > $SCRATCH/vcf_tmp/header_columns.csv
+
+#transfer to MAC to work on excel
+#open a new terminal window
+$ scp francine@fir.computecanada.ca:/scratch/francine/vcf_tmp/header_columns.csv ~/Downloads/
+
+saved the excel file on my mac at desktop/honours/projectfiles/sockeye_filtered_csv.xlsx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
