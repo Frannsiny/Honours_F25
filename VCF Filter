@@ -1,3 +1,14 @@
+# in terminal: 
+
+ssh francine@fir.computecanada.ca
+# enter password (MRU)
+# 2FA
+
+# change into your directory
+cd def-sjsmith/francine
+
+# Activate
+$ conda activate vcftools
 $ cd def-sjsmith/francine
 $ conda activate vcftools
 $ ls
