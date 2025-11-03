@@ -1,0 +1,172 @@
+$ cd def-sjsmith/francine_test/vcf_filt
+I need to use scratch coz I ma struggling with space
+start over, remove everything from here 
+$ rm -f *
+$ls 
+#nothing showing 
+
+go back on folder 
+$cd ..
+
+where is my Scratch
+$ echo "$SCRATCH"
+looks the same 
+confirm
+$ pwd
+#/scratch/francine 
+
+what is in here now?
+$ ls -lh "$SCRATCH"
+#vcf_temp ( from my first attempt)
+
+
+STEP 1
+keep SNPs remove indel (--remove-indels)
+drop sites with >= 50% missing (--max-missing 0.5)
+requires >= 3 copies of the minor allele ( --mac 3)
+require site QUAL >=30 (--minQ 30)
+$ vcftools --gzvcf sockeye.vcf.gz --remove-indels --max-missing 0.5 --mac 3 --minQ 30 --recode --recode-INFO-all --out ~/"$SCRATCH"/step01
+
+Output: $SCRATCH/step01.recode.vcf and $SCRATCH/step01.log
+path: /scratch/francine/step01.recode.vcf, /scratch/francine/step01.log
+
+After filtering, kept 74 out of 74 Individuals
+After filtering, kept 7286077 out of a possible 12813535 Sites
+
+
+STEP 2
+convert low-depth genotype to missing DP >=3 ( --minDP 3)
+
+$ vcftools --vcf "$SCRATCH/step01.recode.vcf" --minDP 3 --recode --recode-INFO-all --out "$SCRATCH/step2"
+
+output: $SCRATCH/step2.recode.vcf + step2.log
+
+After filtering, kept 74 out of 74 Individuals
+After filtering, kept 7286077 out of a possible 7286077 Sites
+
+STEP 3
+
+Output missing individuals to remove  (--missing-ind)
+read Step 2 calculate how much data is missing per individual after I filtered and makes a report 
+
+$ vcftools --vcf "$SCRATCH/step2.recode.vcf" --missing-indv --out "$SCRATCH/step3"
+
+output: SCRATCH/step3.imiss + step3.log
+(note is an .imiss file not a VCF
+
+After filtering, kept 74 out of 74 Individuals
+After filtering, kept 7286077 out of a possible 7286077 Sites
+# no individuals to remove?
+????? how do i know if i should remove anyone?
+----------------------------------------------
+have a look into the report
+ $ head -n 20 "$SCRATCH/step3.imiss"
+need to sort the ones with the highest F_MISS?  how?
+$ sort -t $'\t' -k5,5n | head - NO
+"$SCRATCH/step3.imiss" | sort -t $'\t' -k5,5nr | head -n 20 - NO permission denied
+sort -t $'\t' -k5,5n "$SCRATCH/step3.imiss" | head -n 20
+I want to reverse
+sort -t $'\t' -k5,5nr "$SCRATCH/step3.imiss" | head -n 20
+
+#Oner_Horsefly_2021_519.merged.dedup.bam	7286077	0	7165527	0.983455
+Oner_Horsefly_2021_511.merged.dedup.bam	7286077	0	6589837	0.904442
+Oner_Horsefly_2021_515.merged.dedup.bam	7286077	0	6455038	0.885942
+Oner_Horsefly_2018_540.merged.dedup.bam	7286077	0	5053692	0.693609
+Oner_Horsefly_2018_542.merged.dedup.bam	7286077	0	4391242	0.602689
+Oner_Stellako_2019_353.merged.dedup.bam	7286077	0	249456	0.0342374
+Oner_Stellako_2019_365.merged.dedup.bam	7286077	0	226836	0.0311328
+Oner_Stellako_2019_373.merged.dedup.bam	7286077	0	213991	0.0293699
+Oner_Horsefly_2018_536.merged.dedup.bam	7286077	0	213981	0.0293685
+Oner_Bowron_2020_380.merged.dedup.bam	7286077	0	209008	0.0286859
+Oner_Bowron_2020_386.merged.dedup.bam	7286077	0	198541	0.0272494
+Oner_Bowron_2020_388.merged.dedup.bam	7286077	0	195651	0.0268527
+Oner_Bowron_2020_405.merged.dedup.bam	7286077	0	191112	0.0262298
+Oner_Bowron_2014_431.merged.dedup.bam	7286077	0	177535	0.0243663
+Oner_Bowron_2020_382.merged.dedup.bam	7286077	0	172118	0.0236229
+Oner_Horsefly_2018_538.merged.dedup.bam	7286077	0	163344	0.0224186
+Oner_Horsefly_2019_470.merged.dedup.bam	7286077	0	162035	0.022239
+Oner_Bowron_2020_384.merged.dedup.bam	7286077	0	153482	0.0210651
+Oner_Stellako_2019_339.merged.dedup.bam	7286077	0	150070	0.0205968
+Oner_Stellako_2019_374.merged.dedup.bam	7286077	0	146581	0.020118
+
+should I remove this high ones?
+---------------------------------------------------------------
+
+
+STEP 4
+
+keep only biallelic SNPs ( --min-alleles 2 --max-alleles 2)
+Remark low depth genotypes as missing before counting (--minDP 3)
+keep a site only if ≥75% of individuals have a genotype present (--max-missing 0.75)
+
+$ vcftools --vcf "$SCRATCH/step2.recode.vcf" --min-alleles 2 --max-alleles 2 --minDP 3 --max-missing 0.75 --recode --recode-INFO-all --out "$SCRATCH/step4"
+Used step 2 as input, right?
+output: $SCRATCH/step4.recode.vcf + step4.log
+
+After filtering, kept 74 out of 74 Individuals
+After filtering, kept 7011619 out of a possible 7286077 Sites
+
+STEP 5 
+keep sites with minor-allele frequency >= 1%, remove the very rare sites ( --maf 0.01)
+any genotype with GQ < 10 becomes missing ( --minGQ 10)
+drop sites whose average depth across samples is > 200 (--max-meanDP 200)
+
+$ vcftools --vcf "$SCRATCH/step4.recode.vcf" --maf 0.01 --minGQ 10 --max-meanDP 200 --recode --recode-INFO-all --out "$SCRATCH/step5"
+
+output: $SCRATCH/step5.recode.vcf + step5.log
+
+After filtering, kept 74 out of 74 Individuals
+After filtering, kept 7011619 out of a possible 7011619 Sites
+
+
+STEP 6 
+
+do it all
+
+$ vcftools --vcf "$SCRATCH/step5.recode.vcf" --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --maf 0.01 --minDP 3 --minGQ 10 --recode --recode-INFO-all --out "$SCRATCH/step6"
+
+Output: $SCRATCH/step6.recode.vcf + step6.log
+
+After filtering, kept 74 out of 74 Individuals
+After filtering, kept 7011619 out of a possible 7011619 Sites
+
+Check SNPs in my current VCF
+
+$ grep -v '^#' "$SCRATCH/step6.recode.vcf" | wc -l
+# 7011619
+
+save a copy inside francine_test/vcf_filt
+$ cp "$SCRATCH/step6.recode.vcf" ~/def-sjsmith/francine_test/vcf_filt/
+#cp: error writing '/home/francine/def-sjsmith/francine_test/vcf_filt/step6.recode.vcf': Disk quota exceeded
+fail, Disk quota exceeded
+create a portal?
+
+symlink 
+~/def-sjsmith/francine_test/vcf_filt/step6.recode.vcf
+real file lives here 
+/scratch/francine/step6.recode.vcf
+
+
+taylor suggested to save on my home directory. Try tomorrow 
+
+redit all not change the symlink 
+delete old one :
+$ rm -f ~/def-sjsmith/francine_test/vcf_project/step6.recode.vcf
+crete a new one :
+$ ln -s ~/vcf_filt/step6.recode.vcf ~/def-sjsmith/francine_test/vcf_project/step6.recode.vcf
+print the path 
+$ readlink -f ~/def-sjsmith/francine_test/vcf_project/step6.recode.vcf
+
+# /home/francine/def-sjsmith/francine_test/vcf_project/step6.recode.vcf -> /home/francine/vcf_filt/step6.recode.vcf
+
+
+
+
+
+
+
+
+
+
+
+
