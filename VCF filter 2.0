@@ -1,5 +1,7 @@
+I AM DELETING EVERYTHING AND STARTING AGAIN< I AM TOO CONFUSED WITH ALL THESE FILES EVERYWHERE 
+
 $ cd def-sjsmith/francine_test/vcf_filt
-I need to use scratch coz I ma struggling with space
+I need to use scratch coz I am struggling with space
 start over, remove everything from here 
 $ rm -f *
 $ls 
@@ -19,16 +21,41 @@ what is in here now?
 $ ls -lh "$SCRATCH"
 #vcf_temp ( from my first attempt)
 
+step 1 $ vcftools --gzvcf sockeye.vcf.gz --remove-indels --max-missing 0.5 --mac 3 --minQ 30 --recode --recode-INFO-all --out ~/"$SCRATCH"/step01
+step 2 $ vcftools --vcf "$SCRATCH/step01.recode.vcf" --minDP 3 --recode --recode-INFO-all --out "$SCRATCH/step2"
+step 3 $ vcftools --vcf "$SCRATCH/step2.recode.vcf" --missing-indv --out "$SCRATCH/step3"
+step 4 $ vcftools --vcf " $SCRATH/step2.recode.vcf --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --minDP 3 --recode --recode-INFO-all --out step4_v2
+step 5 $ vcftools --vcf "$SCRATCH/step4.recode.vcf" --maf 0.01 --minGQ 10 --max-meanDP 200 --recode --recode-INFO-all --out "$SCRATCH/step5"
+step 6 $ $ vcftools --vcf "$SCRATCH/step5.recode.vcf" --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --maf 0.01 --minDP 3 --minGQ 10 --recode --recode-INFO-all --out "$SCRATCH/step6"
+
+I did all the steps below on scratch but I since changed and saved all inside my home folder 
+----------------------------------------------------------
+$ cd vcf_filt
+$ conda activate vcftools
+
+I am going to create a new folder and run all again
+
+Create a new folder in my home
+$ mkdir -p ~/vcf_clean  
+$ pwd
+#/home/francine/vcf_clean
+
+I can't run step 1 because I dont have sockeye file there, and is too big so I will create a symlink 
+$  ln -s ~/def-sjsmith/francine_test/sockeye.vcf.gz sockeye.vcf.gz
+
+check it is created
+$ ls -l sockeye.vcf.gz
+
 
 STEP 1
 keep SNPs remove indel (--remove-indels)
 drop sites with >= 50% missing (--max-missing 0.5)
 requires >= 3 copies of the minor allele ( --mac 3)
 require site QUAL >=30 (--minQ 30)
-$ vcftools --gzvcf sockeye.vcf.gz --remove-indels --max-missing 0.5 --mac 3 --minQ 30 --recode --recode-INFO-all --out ~/"$SCRATCH"/step01
 
-Output: $SCRATCH/step01.recode.vcf and $SCRATCH/step01.log
-path: /scratch/francine/step01.recode.vcf, /scratch/francine/step01.log
+$ vcftools --gzvcf sockeye.vcf.gz --remove-indels --max-missing 0.5 --mac 3 --minQ 30 --recode --recode-INFO-all --out step1
+
+Output: step1.recode.vcf and step1.log
 
 After filtering, kept 74 out of 74 Individuals
 After filtering, kept 7286077 out of a possible 12813535 Sites
@@ -37,12 +64,12 @@ After filtering, kept 7286077 out of a possible 12813535 Sites
 STEP 2
 convert low-depth genotype to missing DP >=3 ( --minDP 3)
 
-$ vcftools --vcf "$SCRATCH/step01.recode.vcf" --minDP 3 --recode --recode-INFO-all --out "$SCRATCH/step2"
+$ vcftools --vcf step1.recode.vcf --minDP 3 --recode --recode-INFO-all --out step2
 
-output: $SCRATCH/step2.recode.vcf + step2.log
+output: step2.recode.vcf + step2.log
 
 After filtering, kept 74 out of 74 Individuals
-After filtering, kept 7286077 out of a possible 7286077 Sites
+After filtering, kept 7286077 out of a possible 12813535 Sites
 
 STEP 3
 
@@ -91,20 +118,36 @@ Oner_Stellako_2019_374.merged.dedup.bam	7286077	0	146581	0.020118
 
 should I remove this high ones?
 ---------------------------------------------------------------
+Sara told me to run this 
+awk '$5 > 0.5' step3.imiss | cut -f1 > lowDP.indv
+less lowDP.indv
+
+(vcftools) [francine@login1 vcf_filt]$ head -n 10 lowDP.indv
+INDV
+Oner_Horsefly_2018_540.merged.dedup.bam
+Oner_Horsefly_2018_542.merged.dedup.bam
+Oner_Horsefly_2021_511.merged.dedup.bam
+Oner_Horsefly_2021_515.merged.dedup.bam
+Oner_Horsefly_2021_519.merged.dedup.bam
+
+These are the same top 5 individuals I saw before on my list, all had F_MISS .0.6
 
 
 STEP 4
+Sara instruction for step 4 (updated):
+vcftools --vcf <prevVCF>.recode.vcf --remove-indels --remove lowDP.indv --min-alleles 2 --max-alleles 2 --max-missing 0.75 --minDP 3 --recode --recode-INFO-all --out <nextStep>
 
+remove individuals (--remove lowDP.indv)
 keep only biallelic SNPs ( --min-alleles 2 --max-alleles 2)
 Remark low depth genotypes as missing before counting (--minDP 3)
 keep a site only if ≥75% of individuals have a genotype present (--max-missing 0.75)
 
-$ vcftools --vcf "$SCRATCH/step2.recode.vcf" --min-alleles 2 --max-alleles 2 --minDP 3 --max-missing 0.75 --recode --recode-INFO-all --out "$SCRATCH/step4"
-Used step 2 as input, right?
-output: $SCRATCH/step4.recode.vcf + step4.log
+$ vcftools --vcf step2.recode.vcf --remove lowDP.indv --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --minDP 3 --recode --recode-INFO-all --out step4
 
-After filtering, kept 74 out of 74 Individuals
-After filtering, kept 7011619 out of a possible 7286077 Sites
+output: step4.recode.vcf + step4.log
+
+After filtering, kept 69 out of 74 Individuals
+After filtering, kept 7066836 out of a possible 7286077 Sites
 
 STEP 5 
 keep sites with minor-allele frequency >= 1%, remove the very rare sites ( --maf 0.01)
