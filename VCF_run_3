@@ -86,4 +86,24 @@ FINAL CHECK
 $ grep -v '^#' filt6.recode.vcf | wc -l
 # 7019106
 
+Create the summary table 
+$ grep '^#CHROM' filt6.recode.vcf | cut -f10- | tr '\t' '\n' > after_samples.csv
+
+Open new terminal window
+$ scp francine@fir.computecanada.ca:/scratch/francine/VCF_run_3/after_samples.csv \
+  ~/Desktop/honours/project files/sockeye_filtered_csv.csv
+
+Compress my files (look online)
+ tar -czf VCF_run_3_SIMPLE_20251103.tgz \
+  filt*.recode.vcf filt*.log filt3.imiss lowDP.indv \
+  after_samples.txt after_samples.csv
+scp francine@fir.computecanada.ca:/scratch/francine/VCF_run_3/VCF_run_3_SIMPLE_20251103.tgz \
+  ~/Desktop/honours/projectfiles/
+
+
+
+
+
+
+
 
