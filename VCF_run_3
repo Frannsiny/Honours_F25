@@ -1,0 +1,89 @@
+$ ssh francine@computecanada.ca
+$ conda activate vcftools
+
+create a folder in scratch 
+
+$ mkdir -p /scratch/francine/VCF_run_3
+$ cd "$SCRATCH/VCF_run_3"
+$ pwd
+# /scratch/francine/VCF_run_3
+
+create symlink
+$ ln -s ~/def-sjsmith/francine_test/sockeye.vcf.gz sockeye.vcf.gz
+confirm
+$ ls -l sockeye.vcf.gz
+#  sockeye.vcf.gz -> /home/francine/def-sjsmith/francine_test/sockeye.vcf.gz
+
+STEP 1
+$ vcftools --gzvcf sockeye.vcf.gz --remove-indels --max-missing 0.5 --mac 3 --minQ 30 --recode --recode-INFO-all --out filt1
+
+# After filtering, kept 74 out of 74 Individuals
+# After filtering, kept 7286077 out of a possible 12813535 Sites
+
+INPUT: sockeye.vcf.gz
+OUTPUT: filt1.recode.vcf, filt1.log
+
+STEP 2
+$ vcftools --vcf filt1.recode.vcf --minDP 3 --recode --recode-INFO-all --out filt2
+
+# After filtering, kept 74 out of 74 Individuals
+# After filtering, kept 7286077 out of a possible 7286077 Sites
+
+INPUT: filt1.recode.vcf
+OUTPUT: filt2.recode.vcf, filt2.log
+
+STEP 3 
+$ vcftools --vcf filt2.recode.vcf --missing-indv --out filt3
+
+# After filtering, kept 74 out of 74 Individuals
+# After filtering, kept 7286077 out of a possible 7286077 Sites
+
+INPUT: filt2.recode,vcf
+OUTPUT: filt3.imiss, filt3.log
+
+$ awk '$5 > 0.5' filt3.imiss | cut -f1 > lowDP.indv
+less lowDP.indv
+
+OUTPUT: lowDP.indv
+
+#INDV
+#Oner_Horsefly_2018_540.merged.dedup.bam
+#Oner_Horsefly_2018_542.merged.dedup.bam
+#Oner_Horsefly_2021_511.merged.dedup.bam
+#Oner_Horsefly_2021_515.merged.dedup.bam
+#Oner_Horsefly_2021_519.merged.dedup.bam
+# remove 5 individuals
+
+STEP 4
+$ vcftools --vcf filt2.recode.vcf --remove lowDP.indv --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --minDP 3 --recode --recode-INFO-all --out filt4
+
+# After filtering, kept 69 out of 74 Individuals
+# After filtering, kept 7066836 out of a possible 7286077 Sites
+
+INPUT: filt2.recode.vcf, lowDP.indv
+OUTPUT: filt4.recode.vcf, filt4.log
+
+
+STEP 5 
+$ vcftools --vcf filt4.recode.vcf --maf 0.01 --minGQ 10 --max-meanDP 200 --recode --recode-INFO-all --out filt5
+
+# After filtering, kept 69 out of 69 Individuals
+# After filtering, kept 7019106 out of a possible 7066836 Sites
+
+INPUT: filt4.recode.vcf
+OUTPUT:filt5.recode.vcf, filt5.log
+
+STEP 6 : 
+$ vcftools --vcf filt5.recode.vcf --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --maf 0.01 --minDP 3 --minGQ 10 --recode --recode-INFO-all --out filt6
+
+# After filtering, kept 69 out of 69 Individuals
+# After filtering, kept 7019106 out of a possible 7019106 Sites
+
+INPUT: filt5.recode.vcf
+OUTPUT: filt6.recode.vcf, filt6.log
+
+FINAL CHECK
+$ grep -v '^#' filt6.recode.vcf | wc -l
+# 7019106
+
+
