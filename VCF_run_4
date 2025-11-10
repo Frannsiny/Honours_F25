@@ -98,3 +98,34 @@ FINAL CHECK
 $ grep -v '^#' filt6_run4.recode.vcf | wc -l
 # 7005639
 
+Create before.txt and after.txt
+
+$ nano before.txt
+copy from excel
+$ control+o, enter
+$ control+x
+$ cat before.txt 
+# gives me the list 
+
+repeate for after 
+
+Create VCF filt_before
+
+$ vcftools --vcf filt6_run4.recode.vcf --keep before.txt --recode --recode-INFO-all --out filt_before
+OUTPUT: filt_before.recode.vcf, filt_before.log
+
+#After filtering, kept 30 out of 68 Individuals
+#Outputting VCF file...
+#After filtering, kept 7005639 out of a possible 7005639 Sites
+
+Create VCF filt_after
+
+$ vcftools --vcf filt6_run4.recode.vcf --keep after.txt --recode --recode-INFO-all --out filt_after
+
+OUTPUT: filt_after.recode.vcf, filt_after.log 
+$After filtering, kept 38 out of 68 Individuals
+$Outputting VCF file...
+$After filtering, kept 7005639 out of a possible 7005639 Sites
+
+
+Cre
