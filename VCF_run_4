@@ -44,9 +44,9 @@ STEP 3
 
 $ vcftools --vcf filt2_run4.recode.vcf --missing-indv --out filt3_run4
 
-After filtering, kept 73 out of 73 Individuals
-Outputting Individual Missingness
-After filtering, kept 7265493 out of a possible 7265493 Sites
+# After filtering, kept 73 out of 73 Individuals
+# Outputting Individual Missingness
+# After filtering, kept 7265493 out of a possible 7265493 Sites
 
 INPUT filt2_run4.recode.vcf
 OUTPUT filt3_run4.imiss, filt3_run4.log
@@ -54,14 +54,47 @@ OUTPUT filt3_run4.imiss, filt3_run4.log
 $ awk '$5 > 0.5' filt3_run4.imiss | cut -f1 > lowDP_4.indv
 less lowDP_4.indv
 
-INDV
-Oner_Horsefly_2018_540.merged.dedup.bam
-Oner_Horsefly_2018_542.merged.dedup.bam
-Oner_Horsefly_2021_511.merged.dedup.bam
-Oner_Horsefly_2021_515.merged.dedup.bam
-Oner_Horsefly_2021_519.merged.dedup.bam
+# INDV
+# Oner_Horsefly_2018_540.merged.dedup.bam
+# Oner_Horsefly_2018_542.merged.dedup.bam
+# Oner_Horsefly_2021_511.merged.dedup.bam
+# Oner_Horsefly_2021_515.merged.dedup.bam
+# Oner_Horsefly_2021_519.merged.dedup.bam
 
 OUTPUT: lowDP_4.indv
 
 STEP 4
 $ vcftools --vcf filt2_run4.recode.vcf --remove lowDP_4.indv --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --minDP 3 --recode --recode-INFO-all --out filt4_run4
+
+# After filtering, kept 68 out of 73 Individuals
+# Outputting VCF file...
+# After filtering, kept 7053404 out of a possible 7265493 Sites
+
+INPUT: filt2_run4.recode.vcf, lowDP_4.indv
+OUTPUT: filt4_run4.recode.vcf, filt4_run4.log
+
+STEP 5 
+$ vcftools --vcf filt4_run4.recode.vcf --maf 0.01 --minGQ 10 --max-meanDP 200 --recode --recode-INFO-all --out filt5_run4
+
+# After filtering, kept 68 out of 68 Individuals
+# Outputting VCF file...
+# After filtering, kept 7005639 out of a possible 7053404 Sites
+
+INPUT: filt4_run4.recode.vcf
+OUTPUT:filt5_run4.recode.vcf, filt5_run4.log
+
+STEP 6 : 
+$ vcftools --vcf filt5_run4.recode.vcf --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --maf 0.01 --minDP 3 --minGQ 10 --recode --recode-INFO-all --out filt6_run4
+
+# After filtering, kept 68 out of 68 Individuals
+Outputting VCF file...
+After filtering, kept 7005639 out of a possible 7005639 Sites
+
+INPUT: filt5_run4.recode.vcf
+OUTPUT: filt6_run4.recode.vcf, filt6_run4.log
+
+
+FINAL CHECK
+$ grep -v '^#' filt6_run4.recode.vcf | wc -l
+# 7005639
+
