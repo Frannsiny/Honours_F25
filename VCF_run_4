@@ -128,4 +128,6 @@ $Outputting VCF file...
 $After filtering, kept 7005639 out of a possible 7005639 Sites
 
 
-Cre
+I moved myself back into francine_test 
+copied the 2 files in there. ( the final dot makes the file I copied go into the file I am at currently )
+$ cp /scratch/francine/VCF_run_4/filt_before.recode.vcf /scratch/francine/VCF_run_4/filt_after.recode.vcf .
