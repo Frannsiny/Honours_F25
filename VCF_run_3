@@ -98,6 +98,13 @@ grep -v '^#' filt7_no413.recode.vcf | wc -l
 
 Create the summary table 
 $ grep '^#CHROM' filt6.recode.vcf | cut -f10- | tr '\t' '\n' > after_samples.csv
+grep- search for lines that match what I want 
+'^CHROM' - find column CHROM
+cut -f10- remove the 9 columns of metadata (CHROM, POS, ID, REF, ALT, QUAL, FILTER, INFO, FORMAT)
+tr - translate
+\t tab character
+\n newline - make one per line so in not all together
+> after_sample (file name)
 
 Open new terminal window
 $ scp francine@fir.computecanada.ca:/scratch/francine/VCF_run_3/after_samples.csv \
