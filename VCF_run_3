@@ -82,9 +82,19 @@ $ vcftools --vcf filt5.recode.vcf --remove-indels --min-alleles 2 --max-alleles 
 INPUT: filt5.recode.vcf
 OUTPUT: filt6.recode.vcf, filt6.log
 
+STEP 7 :
+$ vcftools --vcf filt6.recode.vcf --remove-indv Oner_Bowron_2014_413.merged.dedup.bam --recode --recode-INFO-all --out filt7_no413
+
+# After filtering, kept 68 out of 69 Individuals
+# After filtering, kept 7019106 out of a possible 7019106 Sites
+
+INPUT: filt6.recode.vcf
+OUTPUT: filt7_no413
+
 FINAL CHECK
-$ grep -v '^#' filt6.recode.vcf | wc -l
+grep -v '^#' filt7_no413.recode.vcf | wc -l
 # 7019106
+
 
 Create the summary table 
 $ grep '^#CHROM' filt6.recode.vcf | cut -f10- | tr '\t' '\n' > after_samples.csv
