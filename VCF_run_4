@@ -1,0 +1,67 @@
+$ ssh francine@fir.computecanada.ca
+$ conda activate vcftools
+$ cd /scratch/francine
+$ mkdir VCF_run_4
+$ cd VCF_run_4
+create symlink
+$ ln -s ~/def-sjsmith/francine_test/sockeye.vcf.gz sockeye.vcf.gz
+confirm
+$ ls -l sockeye.vcf.gz
+# sockeye.vcf.gz -> /home/francine/def-sjsmith/francine_test/sockeye.vcf.gz
+
+Step 0 - Remove 413
+$vcftools --gzvcf sockeye.vcf.gz --remove-indv Oner_Bowron_2014_413.merged.dedup.bam --recode --recode-INFO-all --out filt_run4_0
+
+#After filtering, kept 73 out of 74 Individuals
+#Outputting VCF file...
+#After filtering, kept 12813535 out of a possible 12813535 Sites
+
+INPUT: sockeye.vcf.gz
+OUTPUT: filt_run4_0.recode.vcf and filt_run4_0.log
+
+STEP 1
+$ vcftools --vcf filt_run4_0.recode.vcf --remove-indels --max-missing 0.5 --mac 3 --minQ 30 --recode --recode-INFO-all --out filt1_run4
+
+# After filtering, kept 73 out of 73 Individuals
+# Outputting VCF file...
+# After filtering, kept 7265493 out of a possible 12813535 Sites
+
+INPUT filt_run4_0.recode.vcf
+OUTPUT filt1_run4.recode.vcf, filt1_run4.log
+
+
+STEP 2
+$ vcftools --vcf filt1_run4.recode.vcf --minDP 3 --recode --recode-INFO-all --out filt2_run4
+
+INPUT filt1_run4.recode.vcf
+OUTPUT filt2_run4.recode.vcf, fint2_run4.log
+
+After filtering, kept 73 out of 73 Individuals
+Outputting VCF file...
+After filtering, kept 7265493 out of a possible 7265493 Sites
+
+STEP 3
+
+$ vcftools --vcf filt2_run4.recode.vcf --missing-indv --out filt3_run4
+
+After filtering, kept 73 out of 73 Individuals
+Outputting Individual Missingness
+After filtering, kept 7265493 out of a possible 7265493 Sites
+
+INPUT filt2_run4.recode.vcf
+OUTPUT filt3_run4.imiss, filt3_run4.log
+
+$ awk '$5 > 0.5' filt3_run4.imiss | cut -f1 > lowDP_4.indv
+less lowDP_4.indv
+
+INDV
+Oner_Horsefly_2018_540.merged.dedup.bam
+Oner_Horsefly_2018_542.merged.dedup.bam
+Oner_Horsefly_2021_511.merged.dedup.bam
+Oner_Horsefly_2021_515.merged.dedup.bam
+Oner_Horsefly_2021_519.merged.dedup.bam
+
+OUTPUT: lowDP_4.indv
+
+STEP 4
+$ vcftools --vcf filt2_run4.recode.vcf --remove lowDP_4.indv --remove-indels --min-alleles 2 --max-alleles 2 --max-missing 0.75 --minDP 3 --recode --recode-INFO-all --out filt4_run4
