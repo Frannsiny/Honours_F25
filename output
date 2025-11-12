@@ -16,6 +16,56 @@ Outputting Individual Heterozygosity
 After filtering, kept 7005639 out of a possible 7005639 Sites
 OUTPUT: het_fater.het; het_after.log
 
+(vcftools) [francine@login3 francine_test]$ head -20 het_before.het
+INDV	O(HOM)	E(HOM)	N_SITES	F
+Oner_Bowron_2014_409.merged.dedup.bam	4712439	5025466.1	6817494	-0.17468
+Oner_Bowron_2014_411.merged.dedup.bam	4681988	5032629.7	6826991	-0.19541
+Oner_Bowron_2014_412.merged.dedup.bam	4734181	5022267.7	6813230	-0.16086
+Oner_Bowron_2014_414.merged.dedup.bam	4723643	5022609.9	6813636	-0.16692
+Oner_Bowron_2014_418.merged.dedup.bam	4756853	5020995.0	6811390	-0.14753
+Oner_Bowron_2014_419.merged.dedup.bam	4703001	5031138.8	6824966	-0.18293
+Oner_Bowron_2014_431.merged.dedup.bam	4740890	4973715.8	6748357	-0.13120
+Oner_Bowron_2014_432.merged.dedup.bam	4719171	5016052.4	6804845	-0.16597
+Oner_Bowron_2014_433.merged.dedup.bam	4726330	5014428.3	6802435	-0.16113
+Oner_Bowron_2014_434.merged.dedup.bam	4678885	5016088.1	6804706	-0.18853
+Oner_Horsefly_2018_531.merged.dedup.bam	4561132	5032752.1	6826643	-0.26290
+Oner_Horsefly_2018_533.merged.dedup.bam	4641505	5016179.6	6804696	-0.20949
+Oner_Horsefly_2018_534.merged.dedup.bam	4734780	5024834.8	6816553	-0.16189
+Oner_Horsefly_2018_535.merged.dedup.bam	4699616	5023722.3	6815008	-0.18094
+Oner_Horsefly_2018_536.merged.dedup.bam	4644558	4948053.9	6712328	-0.17202
+Oner_Horsefly_2018_538.merged.dedup.bam	4611177	4980448.1	6756302	-0.20794
+Oner_Horsefly_2018_539.merged.dedup.bam	4688907	5016864.2	6805986	-0.18331
+Oner_Horsefly_2018_541.merged.dedup.bam	4684200	5025730.7	6817649	-0.19059
+Oner_Horsefly_2018_543.merged.dedup.bam	4700074	5014473.7	6802767	-0.17581
+
+
+
+(vcftools) [francine@login3 francine_test]$ head -20 het_after.het
+INDV	O(HOM)	E(HOM)	N_SITES	F
+Oner_Bowron_2020_380.merged.dedup.bam	4769272	5045097.4	6802140	-0.15698
+Oner_Bowron_2020_382.merged.dedup.bam	4826465	5071149.3	6836642	-0.13859
+Oner_Bowron_2020_384.merged.dedup.bam	4825545	5083413.5	6852861	-0.14573
+Oner_Bowron_2020_386.merged.dedup.bam	4783876	5052989.0	6812568	-0.15294
+Oner_Bowron_2020_388.merged.dedup.bam	4741499	5054305.1	6814420	-0.17772
+Oner_Bowron_2020_397.merged.dedup.bam	4788588	5099424.2	6873634	-0.17520
+Oner_Bowron_2020_398.merged.dedup.bam	4755743	5113910.4	6892791	-0.20134
+Oner_Bowron_2020_399.merged.dedup.bam	4794205	5086715.9	6856811	-0.16525
+Oner_Bowron_2020_404.merged.dedup.bam	4808288	5098333.1	6872215	-0.16351
+Oner_Bowron_2020_405.merged.dedup.bam	4803365	5056250.6	6816775	-0.14364
+Oner_Bowron_2020_408.merged.dedup.bam	4835515	5093214.4	6865467	-0.14541
+Oner_Horsefly_2019_455.merged.dedup.bam	4876726	5097457.0	6871121	-0.12445
+Oner_Horsefly_2019_458.merged.dedup.bam	4788203	5116127.4	6895627	-0.18428
+Oner_Horsefly_2019_459.merged.dedup.bam	4802888	5118864.7	6899446	-0.17746
+Oner_Horsefly_2019_461.merged.dedup.bam	4788465	5093367.8	6865630	-0.17204
+Oner_Horsefly_2019_463.merged.dedup.bam	4716936	5105574.6	6882032	-0.21877
+Oner_Horsefly_2019_469.merged.dedup.bam	4779102	5102099.4	6877053	-0.18198
+Oner_Horsefly_2019_470.merged.dedup.bam	4810854	5076701.7	6843747	-0.15045
+Oner_Horsefly_2019_471.merged.dedup.bam	4776953	5095227.8	6868359	-0.17950
+
+
+Does all of the negatives means my heterozygosity did not reduce then. I have high heterozygosity ....
+
+
 TAJIMA'S D
 
 What number do I use for interger?
