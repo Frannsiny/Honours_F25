@@ -1,10 +1,24 @@
 $ ssh francine@fir.computecanada.ca
 $conda activate vcftools
 $ cd def-sjsmith/francine_test
+
+HETEROZYGOSITY
 $ vcftools --vcf filt_before.recode.vcf --het --out het_before
 
 After filtering, kept 30 out of 30 Individuals
 Outputting Individual Heterozygosity
 After filtering, kept 7005639 out of a possible 7005639 Sites
-Run Time = 17.00 seconds
+OUTPUT: Het_before.het; het_before.log
+
+$ vcftools --vcf filt_after.recode.vcf --het --out het_after
+After filtering, kept 38 out of 38 Individuals
+Outputting Individual Heterozygosity
+After filtering, kept 7005639 out of a possible 7005639 Sites
+OUTPUT: het_fater.het; het_after.log
+
+TAJIMA'S D
+
+What number do I use for interger?
+
+
 
