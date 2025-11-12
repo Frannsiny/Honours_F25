@@ -1,0 +1,10 @@
+$ ssh francine@fir.computecanada.ca
+$conda activate vcftools
+$ cd def-sjsmith/francine_test
+$ vcftools --vcf filt_before.recode.vcf --het --out het_before
+
+After filtering, kept 30 out of 30 Individuals
+Outputting Individual Heterozygosity
+After filtering, kept 7005639 out of a possible 7005639 Sites
+Run Time = 17.00 seconds
+
