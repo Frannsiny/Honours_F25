@@ -118,7 +118,18 @@ scp francine@fir.computecanada.ca:/scratch/francine/VCF_run_3/VCF_run_3_SIMPLE_2
   ~/Desktop/honours/projectfiles/
 
 
+cmd tab - open new tab, sign in with sftp francine@fir.computecanada.ca....
+sftp>
+l in front change to my computer
 
+
+get from cluster to computer
+put from computer to cluster
+
+shows on my desktop
+open with sublime
+save as .CSV
+so I can open on R
 
 
 
