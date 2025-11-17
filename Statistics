@@ -1,0 +1,62 @@
+(base) [francine@login1 ~]$ ls
+def-sjsmith  miniconda3  Miniconda3-latest-Linux-x86_64.sh  nearline  projects  scratch
+(base) [francine@login1 ~]$ cd def-sjsmith/francine_test
+(base) [francine@login1 francine_test]$ ls
+filt6.recode.vcf       filt_before.recode.vcf  het_after.log   het_before.log  sockeye.vcf.gz
+filt_after.recode.vcf  het_after.het           het_before.het  out.log         test.log
+(base) [francine@login1 francine_test]$ conda activate vcftools
+
+Nucleotide Divergence Statistic
+--site-pi
+(vcftools) [francine@login1 francine_test]$ vcftools --vcf filt_before.recode.vcf --site-pi --out site_before
+After filtering, kept 30 out of 30 Individuals
+After filtering, kept 7005639 out of a possible 7005639 Sitesls
+OUTPUT 
+site_before.log 
+site_before.sites.pi
+
+vcftools --vcf filt_after.recode.vcf --site-pi --out site_after
+After filtering, kept 38 out of 38 Individuals
+After filtering, kept 7005639 out of a possible 7005639 Sites
+OUTPUT
+site_after.log 
+site_after.sites.pi
+
+--window-pi
+vcftools --vcf filt_before.recode.vcf --window-pi 50000 --window-pi-step 10000  --out window_pi_before
+OUTPUT
+window_pi_after.windowed.pi
+window_pi_after.log
+
+vcftools --vcf filt_after.recode.vcf --window-pi 50000 --window-pi-step 10000  --out window_pi_after
+OUTPUT
+window_pi_before.windowed.pi
+window_pi_before.log
+
+Allele Statistic
+vcftools --vcf filt_before.recode.vcf --freq --out beforeAF
+OUTPUT
+beforeAF.frq
+beforeAF.log
+
+vcftools --vcf filt_after.recode.vcf --freq --out afterAF
+OUTPUT
+afterAF.frq
+afterAF.log
+
+--TajimaD
+
+vcftools --vcf filt_before.recode.vcf --TajimaD 10000 --out tajima_before_10
+OUTPUT
+tajima_before_10.Tajima.D
+tajima_before_10.log
+
+vcftools --vcf filt_after.recode.vcf --TajimaD 10000 --out tajima_after_10
+OUTPUT
+tajima_after_10.Tajima.D
+tajima_after_10.log
+
+
+FST
+
+
