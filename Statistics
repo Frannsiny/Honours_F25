@@ -59,4 +59,78 @@ tajima_after_10.log
 
 FST
 
+vcftools --vcf filt6.recode.vcf --weir-fst-pop /scratch/francine/VCF_run_4/before.txt --weir-fst-pop /scratch/francine/VCF_run_4/after.txt --out fst_before_vs_after_sites
+Keeping individuals in 'keep' list
+After filtering, kept 68 out of 69 Individuals
+Outputting Weir and Cockerham Fst estimates.
+Weir and Cockerham mean Fst estimate: 0.0018866
+Weir and Cockerham weighted Fst estimate: 0.0028858
+After filtering, kept 38031 out of a possible 38031 Sites
+
+
+window 10kb and 5kb movement
+vcftools --vcf filt6.recode.vcf --weir-fst-pop /scratch/francine/VCF_run_4/before.txt --weir-fst-pop /scratch/francine/VCF_run_4/after.txt --fst-window-size 10000 --fst-window-step 5000 --out fst_before_vs_after_10_5
+
+After filtering, kept 68 out of 69 Individuals
+Outputting Windowed Weir and Cockerham Fst estimates.
+Weir and Cockerham mean Fst estimate: 0.0018866
+Weir and Cockerham weighted Fst estimate: 0.0028858
+After filtering, kept 38031 out of a possible 38031 Sites  
+
+
+MacBook-Air-9:~ francinecerbino$ sftp francine@fir.computecanada.ca                           
+sftp> pwd
+Remote working directory: /project/6075334/francine_test
+sftp> lcd desktop
+sftp> lpwd
+Local working directory: /Users/francinecerbino/Desktop
+
+sftp> get afterAF.frq
+Fetching /project/6075334/francine_test/afterAF.frq to afterAF.frq
+afterAF.frq                                   100%  311MB  24.8MB/s   00:12    
+
+sftp> get beforeAF.frq
+Fetching /project/6075334/francine_test/beforeAF.frq to beforeAF.frq
+beforeAF.frq                                  100%  295MB  15.3MB/s   00:19    
+
+sftp> get fst_before_vs_after_10_5.windowed.weir.fst
+Fetching /project/6075334/francine_test/fst_before_vs_after_10_5.windowed.weir.fst to fst_before_vs_after_10_5.windowed.weir.fst
+fst_before_vs_after_10_5.windowed.weir.fst    100%   94KB 659.8KB/s   00:00    
+
+sftp> get fst_before_vs_after_sites.weir.fst
+Fetching /project/6075334/francine_test/fst_before_vs_after_sites.weir.fst to fst_before_vs_after_sites.weir.fst
+fst_before_vs_after_sites.weir.fst            100% 1107KB   3.6MB/s   00:00    
+
+sftp> get het_after.het  
+Fetching /project/6075334/francine_test/het_after.het to het_after.het
+het_after.het                                 100% 2857    35.6KB/s   00:00    
+
+sftp> get het_before.het
+Fetching /project/6075334/francine_test/het_before.het to het_before.het
+het_before.het                                100% 2259    26.9KB/s   00:00    
+
+sftp> get site_after.sites.pi
+Fetching /project/6075334/francine_test/site_after.sites.pi to site_after.sites.pi
+site_after.sites.pi                           100%  192MB  14.0MB/s   00:13    
+
+sftp> get site_before.sites.pi
+Fetching /project/6075334/francine_test/site_before.sites.pi to site_before.sites.pi
+site_before.sites.pi                          100%  192MB  24.8MB/s   00:07    
+
+sftp> get tajima_after_10.Tajima.D
+Fetching /project/6075334/francine_test/tajima_after_10.Tajima.D to tajima_after_10.Tajima.D
+tajima_after_10.Tajima.D                      100% 4537KB  10.6MB/s   00:00    
+
+sftp> get tajima_before_10.Tajima.D
+Fetching /project/6075334/francine_test/tajima_before_10.Tajima.D to tajima_before_10.Tajima.D
+tajima_before_10.Tajima.D                     100% 4546KB  11.1MB/s   00:00    
+
+sftp> get window_pi_after.windowed.pi
+Fetching /project/6075334/francine_test/window_pi_after.windowed.pi to window_pi_after.windowed.pi
+window_pi_after.windowed.pi                   100% 6298KB  14.0MB/s   00:00    
+
+sftp> get window_pi_before.windowed.pi
+Fetching /project/6075334/francine_test/window_pi_before.windowed.pi to window_pi_before.windowed.pi
+window_pi_before.windowed.pi                  100% 6297KB  13.1MB/s   00:00    
+sftp>exit
 
