@@ -44,6 +44,17 @@ OUTPUT
 afterAF.frq
 afterAF.log
 
+
+vcftools --vcf filt_before.recode.vcf --freq2 --out beforeAF2
+OUTPUT
+beforeAF2.frq
+beforeAF2.log
+
+vcftools --vcf filt_after.recode.vcf --freq2 --out afterAF2
+afterAF2.frq
+afterAF2.log
+
+
 --TajimaD
 
 vcftools --vcf filt_before.recode.vcf --TajimaD 10000 --out tajima_before_10
@@ -76,6 +87,19 @@ Outputting Windowed Weir and Cockerham Fst estimates.
 Weir and Cockerham mean Fst estimate: 0.0018866
 Weir and Cockerham weighted Fst estimate: 0.0028858
 After filtering, kept 38031 out of a possible 38031 Sites  
+
+(vcftools) [francine@login3 francine_test]$ ls
+afterAF2.frq      filt_after.recode.vcf                       het_before.log            tajima_before_10.log
+afterAF2.log      filt_before.recode.vcf                      out.log                   tajima_before_10.Tajima.D
+afterAF.frq       fst_before_vs_after_10_5.log                site_after.log            test.log
+afterAF.log       fst_before_vs_after_10_5.windowed.weir.fst  site_after.sites.pi       window_pi_after.log
+beforeAF2.frq     fst_before_vs_after_sites.log               site_before.log           window_pi_after.windowed.pi
+beforeAF2.log     fst_before_vs_after_sites.weir.fst          site_before.sites.pi      window_pi_before.log
+beforeAF.frq      het_after.het                               sockeye.vcf.gz            window_pi_before.windowed.pi
+beforeAF.log      het_after.log                               tajima_after_10.log
+filt6.recode.vcf  het_before.het                              tajima_after_10.Tajima.D
+
+
 
 
 MacBook-Air-9:~ francinecerbino$ sftp francine@fir.computecanada.ca                           
