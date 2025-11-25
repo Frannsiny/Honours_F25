@@ -78,6 +78,12 @@ Weir and Cockerham mean Fst estimate: 0.0018866
 Weir and Cockerham weighted Fst estimate: 0.0028858
 After filtering, kept 38031 out of a possible 38031 Sites
 
+Hardy
+
+vcftools --vcf filt_before.recode.vcf --hardy --out hardy_before
+
+vcftools --vcf filt_after.recode.vcf --hardy --out hardy_after
+
 
 window 10kb and 5kb movement
 vcftools --vcf filt6.recode.vcf --weir-fst-pop /scratch/francine/VCF_run_4/before.txt --weir-fst-pop /scratch/francine/VCF_run_4/after.txt --fst-window-size 10000 --fst-window-step 5000 --out fst_before_vs_after_10_5
@@ -156,5 +162,15 @@ window_pi_after.windowed.pi                   100% 6298KB  14.0MB/s   00:00
 sftp> get window_pi_before.windowed.pi
 Fetching /project/6075334/francine_test/window_pi_before.windowed.pi to window_pi_before.windowed.pi
 window_pi_before.windowed.pi                  100% 6297KB  13.1MB/s   00:00    
-sftp>exit
+
+sftp> get hardy_before.hwe
+Fetching /project/6075334/francine_test/hardy_before.hwe to hardy_before.hwe
+hardy_before.hwe                              100%  635MB  15.2MB/s   00:41   
+
+sftp> get hardy_after.hwe
+Fetching /project/6075334/francine_test/hardy_after.hwe to hardy_after.hwe
+hardy_after.hwe                               100%  638MB  14.4MB/s   00:44    
+
+sftp> exit
+
 
