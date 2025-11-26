@@ -78,13 +78,6 @@ Weir and Cockerham mean Fst estimate: 0.0018866
 Weir and Cockerham weighted Fst estimate: 0.0028858
 After filtering, kept 38031 out of a possible 38031 Sites
 
-Hardy
-
-vcftools --vcf filt_before.recode.vcf --hardy --out hardy_before
-
-vcftools --vcf filt_after.recode.vcf --hardy --out hardy_after
-
-
 window 10kb and 5kb movement
 vcftools --vcf filt6.recode.vcf --weir-fst-pop /scratch/francine/VCF_run_4/before.txt --weir-fst-pop /scratch/francine/VCF_run_4/after.txt --fst-window-size 10000 --fst-window-step 5000 --out fst_before_vs_after_10_5
 
@@ -93,6 +86,15 @@ Outputting Windowed Weir and Cockerham Fst estimates.
 Weir and Cockerham mean Fst estimate: 0.0018866
 Weir and Cockerham weighted Fst estimate: 0.0028858
 After filtering, kept 38031 out of a possible 38031 Sites  
+
+
+Hardy
+
+vcftools --vcf filt_before.recode.vcf --hardy --out hardy_before
+
+vcftools --vcf filt_after.recode.vcf --hardy --out hardy_after
+
+
 
 (vcftools) [francine@login3 francine_test]$ ls
 afterAF2.frq      filt_after.recode.vcf                       het_before.log            tajima_before_10.log
@@ -104,8 +106,6 @@ beforeAF2.log     fst_before_vs_after_sites.weir.fst          site_before.sites.
 beforeAF.frq      het_after.het                               sockeye.vcf.gz            window_pi_before.windowed.pi
 beforeAF.log      het_after.log                               tajima_after_10.log
 filt6.recode.vcf  het_before.het                              tajima_after_10.Tajima.D
-
-
 
 
 MacBook-Air-9:~ francinecerbino$ sftp francine@fir.computecanada.ca                           
