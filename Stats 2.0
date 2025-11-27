@@ -1,0 +1,133 @@
+ssh francine@fir.computecanada.ca
+rm *.log
+carried on with this until all I wanted to remove was removed 
+
+
+$ grep '^#CHROM' oncNer.proj10.vcf | tr '\t' '\n' > header_columns.csv
+
+file cleaned inside excel 
+
+Create before.txt and after.txt
+
+$ nano before.txt
+copy from excel
+$ control+o, enter
+$ control+x
+$ cat before.txt 
+# gives me the list 
+
+repeate for after 
+
+(base) [francine@login1 ~]$ conda activate vcftools
+(vcftools) [francine@login1 ~]$ nano before.txt
+(vcftools) [francine@login1 ~]$ cat before.txt
+Oner_Bowron_2014_409.merged.dedup.bam
+Oner_Bowron_2014_411.merged.dedup.bam
+Oner_Bowron_2014_412.merged.dedup.bam
+Oner_Bowron_2014_414.merged.dedup.bam
+Oner_Bowron_2014_418.merged.dedup.bam
+Oner_Bowron_2014_419.merged.dedup.bam
+Oner_Bowron_2014_431.merged.dedup.bam
+Oner_Bowron_2014_432.merged.dedup.bam
+Oner_Bowron_2014_433.merged.dedup.bam
+Oner_Bowron_2014_434.merged.dedup.bam
+Oner_Stellako_2014_299.merged.dedup.bam
+Oner_Stellako_2014_300.merged.dedup.bam
+Oner_Stellako_2014_302.merged.dedup.bam
+Oner_Stellako_2014_303.merged.dedup.bam
+Oner_Stellako_2014_304.merged.dedup.bam
+Oner_Stellako_2014_305.merged.dedup.bam
+Oner_Stellako_2014_306.merged.dedup.bam
+Oner_Stellako_2014_307.merged.dedup.bam
+Oner_Stellako_2014_310.merged.dedup.bam
+Oner_Stellako_2014_311.merged.dedup.bam
+Oner_Stellako_2014_312.merged.dedup.bam
+Oner_Horsefly_2018_531.merged.dedup.bam
+Oner_Horsefly_2018_533.merged.dedup.bam
+Oner_Horsefly_2018_534.merged.dedup.bam
+Oner_Horsefly_2018_535.merged.dedup.bam
+Oner_Horsefly_2018_536.merged.dedup.bam
+Oner_Horsefly_2018_538.merged.dedup.bam
+Oner_Horsefly_2018_539.merged.dedup.bam
+Oner_Horsefly_2018_541.merged.dedup.bam
+Oner_Horsefly_2018_543.merged.dedup.bam
+(vcftools) [francine@login1 ~]$ nano after.txt
+(vcftools) [francine@login1 ~]$ cat after.txt
+
+Create VCF filt_before
+
+$ vcftools --vcf oncNer.proj10.vcf --keep before.txt --recode --recode-INFO-all --out filt_before
+OUTPUT: filt_before.recode.vcf, filt_before.log
+kept 30 out of 68 Individuals
+After filtering, kept 6998391 out of a possible 6998391 Sites
+
+Create VCF filt_after
+
+$ vcftools --vcf oncNer.proj10.vcf --keep after.txt --recode --recode-INFO-all --out filt_after
+
+OUTPUT: filt_after.recode.vcf, filt_after.log 
+$After filtering, kept 38 out of 68 Individuals
+After filtering, kept 6998391 out of a possible 6998391 Sites
+
+
+Tajima D 10kb
+$ vcftools --vcf filt_before.recode.vcf --TajimaD 10000 --out b_tajima
+
+OUTPUT
+b_tajima.Tajima.D
+b_tajima.log
+
+$ vcftools --vcf filt_after.recode.vcf --TajimaD 10000 --out a_tajima
+a_tajima.Tajima.D
+a_tajima.log
+
+
+FST
+
+$ vcftools --vcf oncNer.proj10.vcf --weir-fst-pop before.txt --weir-fst-pop after.txt --out fst_sites
+Keeping individuals in 'keep' list
+After filtering, kept 68 out of 68 Individuals
+Outputting Weir and Cockerham Fst estimates.
+Weir and Cockerham mean Fst estimate: 0.00046474
+Weir and Cockerham weighted Fst estimate: 0.0007113
+After filtering, kept 6998391 out of a possible 6998391 Sites
+Run Time = 33.00 seconds
+
+
+
+window 10kb and 5kb movement
+$ vcftools --vcf oncNer.proj10.vcf --weir-fst-pop before.txt --weir-fst-pop after.txt --fst-window-size 10000 --fst-window-step 5000 --out fst_w
+
+After filtering, kept 68 out of 68 Individuals
+Outputting Windowed Weir and Cockerham Fst estimates.
+Weir and Cockerham mean Fst estimate: 0.00046474
+Weir and Cockerham weighted Fst estimate: 0.0007113
+After filtering, kept 6998391 out of a possible 6998391 Sites
+
+Hardy
+
+$ vcftools --vcf filt_before.recode.vcf --hardy --out b_hardy
+After filtering, kept 30 out of 30 Individuals
+After filtering, kept 6998391 out of a possible 6998391 Sites
+
+$ vcftools --vcf filt_after.recode.vcf --hardy --out a_hardy
+After filtering, kept 38 out of 38 Individuals
+After filtering, kept 6998391 out of a possible 6998391 Sites
+
+
+cftools) [francine@login1 francine_test]$ ls
+after.txt     a_tajima.Tajima.D  b_tajima.log           filt_before.log          header_columns.csv
+a_hardy.hwe   before.txt         b_tajima.Tajima.D      filt_before.recode.vcf   oncNer.proj10.vcf
+a_hardy.log   b_hardy.hwe        filt_after.log         fst_w.log                sockeye.vcf.gz
+a_tajima.log  b_hardy.log        filt_after.recode.vcf  fst_w.windowed.weir.fst
+
+transfer files 
+MacBook-Air-9:~ francinecerbino$ sftp francine@fir.computecanada.ca                           
+sftp> cd def-sjsmith/francine_test
+sftp> lcd desktop
+sftp> lpwd
+Local working directory: /Users/francinecerbino/Desktop
+
+sftp> get <filename>
+sftp> exit
+  
