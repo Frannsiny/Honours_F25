@@ -397,6 +397,8 @@ data.list
 log2.out
 data.tiff
 
+admixture --cv data.bed 3 > log3.out
+
 
 
 
