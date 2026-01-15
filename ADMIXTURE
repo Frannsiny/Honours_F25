@@ -132,4 +132,176 @@ Warning in install.packages("optparse") :
 Error in install.packages("optparse") : unable to install packages
 Execution halted
 
-** I don't know how to install this package to make this work 
+** I don't know how to install this package to make this work, try using R studio
+
+NEW WINDOW:
+
+MacBook-Air-9:~ francinecerbino$ sftp francine@fir.computecanada.ca
+sftp> cd /scratch/francine/W25/results
+sftp> get data.2.Q
+get data.fam
+get data.list
+bye
+MacBook-Air-9:~ francinecerbino$ cd ~/Desktop
+MacBook-Air-9:Desktop francinecerbino$ mkdir W25_analysis
+MacBook-Air-9:Desktop francinecerbino$ cd W25_analysis
+MacBook-Air-9:W25_analysis francinecerbino$ ls
+MacBook-Air-9:W25_analysis francinecerbino$ cp ~/data.2.Q .
+MacBook-Air-9:W25_analysis francinecerbino$ ls
+data.2.Q
+MacBook-Air-9:W25_analysis francinecerbino$ cp ~/data.fam .
+MacBook-Air-9:W25_analysis francinecerbino$ cp ~/data.list .
+MacBook-Air-9:W25_analysis francinecerbino$ ls
+data.2.Q	data.fam	data.list
+MacBook-Air-9:W25_analysis francinecerbino$ 
+
+** Try opening R inside terminal
+
+(base) [francine@login3 W25]$ R
+[mii] Please select a module to run R:
+       MODULE       PARENT(S)
+    1  r/4.5.0      StdEnv/2023
+    2  r/4.4.0      StdEnv/2023
+    3  r/4.3.1      StdEnv/2023
+    4  r/4.3.1      StdEnv/2020
+    5  r/4.2.2      StdEnv/2020
+    6  r/4.2.1      StdEnv/2020
+    7  r/4.1.2      StdEnv/2020
+    8  r/4.1.0      StdEnv/2020
+    9  r/4.0.5      StdEnv/2020
+    10 r/4.0.2      StdEnv/2020
+    11 r/4.0.0      StdEnv/2020
+    12 sagemath/9.3 StdEnv/2020
+Make a selection (1-12, q aborts) [1]: 1
+[mii] loading StdEnv/2023 r/4.5.0 ...
+
+R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> install.packages("optparse")
+Warning in install.packages("optparse") :
+  'lib = "/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v4/Compiler/gcccore/r/4.5.0/lib64/R/library"' is not writable
+Would you like to use a personal library instead? (yes/No/cancel) yes
+Would you like to use a personal library instead? (yes/No/cancel) yes
+Would you like to create a personal library
+‘/home/francine/R/x86_64-pc-linux-gnu-library/4.5’
+to install packages into? (yes/No/cancel) yes
+--- Please select a CRAN mirror for use in this session ---
+Secure CRAN mirrors 
+
+ 1: 0-Cloud [https]                   2: Australia (Canberra) [https]   
+ 3: Australia (Melbourne 1) [https]   4: Australia (Melbourne 2) [https]
+ 5: Austria (Wien) [https]            6: Belgium (Brussels) [https]     
+ 7: Brazil (PR) [https]               8: Brazil (SP 1) [https]          
+ 9: Brazil (SP 2) [https]            10: Bulgaria [https]               
+11: Canada (MB) [https]              12: Canada (ON 1) [https]          
+13: Canada (ON 2) [https]            14: Chile (Santiago) [https]       
+15: China (Beijing 1) [https]        16: China (Beijing 2) [https]      
+17: China (Beijing 3) [https]        18: China (Hefei) [https]          
+19: China (Hong Kong) [https]        20: China (Lanzhou) [https]        
+21: China (Nanjing) [https]          22: China (Shanghai 2) [https]     
+23: China (Shenzhen) [https]         24: China (Wuhan) [https]          
+25: Costa Rica [https]               26: Cyprus [https]                 
+27: Denmark [https]                  28: East Asia [https]              
+29: Ecuador (Cuenca) [https]         30: Finland (Helsinki) [https]     
+31: France (Lyon 1) [https]          32: France (Lyon 2) [https]        
+33: France (Paris 1) [https]         34: Germany (Erlangen) [https]     
+35: Germany (Göttingen) [https]      36: Germany (Leipzig) [https]      
+37: Germany (Münster) [https]        38: Greece [https]                 
+39: Hungary [https]                  40: Iceland [https]                
+41: India (Bengaluru) [https]        42: India (Bhubaneswar) [https]    
+43: India (New Delhi) [https]        44: Indonesia (Banda Aceh) [https] 
+45: Iran (Mashhad) [https]           46: Italy (Milano) [https]         
+47: Italy (Padua) [https]            48: Japan (Yonezawa) [https]       
+49: Korea (Gyeongsan-si) [https]     50: Mexico (Mexico City) [https]   
+51: Mexico (Texcoco) [https]         52: Morocco [https]                
+53: Netherlands (Dronten) [https]    54: New Zealand [https]            
+55: Norway [https]                   56: Saudi Arabia (Riyadh) [https]  
+57: Spain (A Coruña) [https]         58: Spain (Madrid) [https]         
+59: Sweden (Umeå) [https]            60: Switzerland (Zurich 1) [https] 
+61: Taiwan (Taipei) [https]          62: UK (Bristol) [https]           
+63: UK (London 1) [https]            64: USA (IA) [https]               
+65: USA (MI) [https]                 66: USA (MO) [https]               
+67: USA (OH) [https]                 68: USA (OR) [https]               
+69: USA (PA 1) [https]               70: USA (TN) [https]               
+71: USA (UT) [https]                 72: United Arab Emirates [https]   
+73: Uruguay [https]                  74: (other mirrors)                
+
+
+Selection: 11
+
+The downloaded source packages are in
+	‘/tmp/RtmpQIml0e/downloaded_packages’
+
+$ q()
+$ n
+
+(base) [francine@login3 W25]$ cd results
+(base) [francine@login3 results]$ Rscript plotADMIXTURE.r -p data -i data.list -k 2 -l Bowron,Horsefly,Stellako
+[mii] Please select a module to run Rscript:
+       MODULE       PARENT(S)
+    1  r/4.5.0      StdEnv/2023
+    2  r/4.4.0      StdEnv/2023
+    3  r/4.3.1      StdEnv/2023
+    4  r/4.3.1      StdEnv/2020
+    5  r/4.2.2      StdEnv/2020
+    6  r/4.2.1      StdEnv/2020
+    7  r/4.1.2      StdEnv/2020
+    8  r/4.1.0      StdEnv/2020
+    9  r/4.0.5      StdEnv/2020
+    10 r/4.0.2      StdEnv/2020
+    11 r/4.0.0      StdEnv/2020
+    12 sagemath/9.3 StdEnv/2020
+Make a selection (1-12, q aborts) [1]: 1
+[mii] loading StdEnv/2023 r/4.5.0 ...
+null device 
+          1 
+** FOLLOW TUTORIAL GET EVALADMIX
+
+https://www.popgen.dk/software/index.php/EvalAdmix
+
+cd ~/scratch
+git clone https://github.com/GenisGE/evalAdmix.git
+cd evalAdmix
+make
+
+** MODEL : ./evalAdmix -plink inputPlinkPrefix -fname inputPlinkPrefix.K.P -qname inputPlinkPrefix.K.Q -o evaladmixOut.corres -P 10
+
+~/scratch/evalAdmix/evalAdmix -plink data -fname data.2.P -qname data.2.Q -o evaladmixOut.corres -P 10
+
+(base) [francine@login3 results]$ ~/scratch/evalAdmix/evalAdmix -plink data -fname data.2.P -qname data.2.Q -o evaladmixOut.corres -P 10 
+evalAdmix version 0.962
+/home/francine/scratch/evalAdmix/evalAdmix -plink data -fname data.2.P -qname data.2.Q -o evaladmixOut.corres -P 10 
+	-> Will assume these are the plink files:
+		bed: data.bed
+		bim: data.bim
+		fam: data.fam
+	-> Plink file contains 6998391 autosomale SNPs
+	-> reading genotypes 	-> Allocated: 0.952 gig memory
+ - done 
+		->K=2	nSites=6998391	nInd=68
+opening : data.2.Q with x=68 y=2
+opening : data.2.P with x=6998391 y=2
+Going to calcualte normal residuals
+Finished calculating normal residuals
+Correcting frequencies with 10 threads...Killed
+
+**WTF
+
+
+
