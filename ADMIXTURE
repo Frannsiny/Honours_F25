@@ -17,9 +17,14 @@ a_tajima.log  b_hardy.log        filt_after.recode.vcf  fst_sites.weir.fst      
 (base) [francine@login3 francine_test]$ pwd
 /home/francine/def-sjsmith/francine_test
 (base) [francine@login3 francine_test]$ cd /scratch/francine
+
+** Create folders
+
 $ mkdir W25
 $ cd W25
 mkdir data results
+
+** Link to VCF and convert to PLINK
 (base) [francine@login3 W25]$ ln -s /home/francine/def-sjsmith/francine_test/oncNer.proj10.vcf data/oncNer.vcf
 (base) [francine@login3 W25]$ plink --vcf data/oncNer.vcf --make-bed --out results/data --allow-extra-chr --double-id  ( Megan helped and told me to add double id)
 
@@ -38,10 +43,16 @@ Total genotyping rate is 0.99099.
 6998391 variants and 68 people pass filters and QC.
 Note: No phenotypes present.
 --make-bed to results/data.bed + results/data.bim + results/data.fam ... done.
+
 (base) [francine@login3 W25]$ awk '{$1="0";print $0}' results/data.bim > results/data.bim.tmp
 mv results/data.bim.tmp results/data.bim
+** Output: data.bed, data.bim, data.fam
 
 **FOLLOW TUTORIAL:
+** Run ADMIXTURE, usse cross-validation (--cv); input file: data.bed
+2; for k=2
+output results: > log2.out
+
 (base) [francine@login3 W25]$ cd /scratch/francine/W25/results
 (base) [francine@login3 results]$ admixture --cv data.bed 2 > log2.out
 (base) [francine@login3 results]$ ls
@@ -53,7 +64,7 @@ data.2.P  data.2.Q  data.bed  data.bim  data.fam  data.log  data.nosex  log2.out
 2 0.42286
 
 **FOLLOW TUTORIAL
-
+** separate name and species
 (base) [francine@login3 results]$ awk '{split($1,name,"."); print $1,name[2]}' data.nosex > data.list
 (base) [francine@login3 results]$ head data.list
 Oner_Bowron_2014_409.merged.dedup.bam merged
@@ -72,6 +83,7 @@ Oner_Bowron_2014_412.merged.dedup.bam Bowron
 Oner_Bowron_2014_414.merged.dedup.bam Bowron
 
 ** I think is working now 
+** get the R script that is already made in Github
 
 (base) [francine@login3 results]$ wget https://github.com/speciationgenomics/scripts/raw/master/plotADMIXTURE.r
 chmod +x plotADMIXTURE.r
@@ -91,6 +103,7 @@ plotADMIXTURE.r                   100%[=========================================
 
 2026-01-15 08:11:06 (2.86 MB/s) - ‘plotADMIXTURE.r’ saved [4565/4565]
 
+** try to run the script
 (base) [francine@login3 results]$ Rscript plotADMIXTURE.r -p data -i data.list -k 2 -l Bowron
 [mii] Please select a module to run Rscript:
        MODULE       PARENT(S)
@@ -110,6 +123,8 @@ Make a selection (1-12, q aborts) [1]: 1
 [mii] loading StdEnv/2023 r/4.5.0 ...
 Error in library("optparse") : there is no package called ‘optparse’
 Execution halted
+
+** Download the package 
 (base) [francine@login3 results]$ Rscript -e "install.packages('optparse')"
 [mii] Please select a module to run Rscript:
        MODULE       PARENT(S)
@@ -248,10 +263,6 @@ Selection: 11
 The downloaded source packages are in
 	‘/tmp/RtmpQIml0e/downloaded_packages’
 
-$ q()
-$ n
-
-(base) [francine@login3 W25]$ cd results
 (base) [francine@login3 results]$ Rscript plotADMIXTURE.r -p data -i data.list -k 2 -l Bowron,Horsefly,Stellako
 [mii] Please select a module to run Rscript:
        MODULE       PARENT(S)
@@ -271,6 +282,15 @@ Make a selection (1-12, q aborts) [1]: 1
 [mii] loading StdEnv/2023 r/4.5.0 ...
 null device 
           1 
+** created a TIFF image file
+** get the image created and save to my desktop
+get 
+sftp> cd scratch/W25/results            
+sftp> get data.tiff
+Fetching /scratch/francine/W25/results/data.tiff to data.tiff
+data.tiff                                     100% 7031KB  12.9MB/s   00:00    
+sftp>
+
 ** FOLLOW TUTORIAL GET EVALADMIX
 
 https://www.popgen.dk/software/index.php/EvalAdmix
@@ -301,7 +321,88 @@ Going to calcualte normal residuals
 Finished calculating normal residuals
 Correcting frequencies with 10 threads...Killed
 
-**WTF
+**Sara said try interactive job.
+
+I found this :https://docs.alliancecan.ca/wiki/Running_jobs#Interactive_jobs
+** MODEL:
+$ salloc --time=1:0:0 --mem-per-cpu=3G --ntasks=1 --account=def-someuser
+salloc: Granted job allocation 1234567
+$ ...             # do some work
+$ exit            # terminate the allocation
+salloc: Relinquishing job allocation 1234567
+
+**TRY
+note it took 1GB just to read the genotype, so ask for A LOT!
+more about salloc here: https://slurm.schedmd.com/salloc.html
+salloc --time=4:00:00 --mem=64G --cpus-per-task=10 --account=def-sjsmith
+
+salloc: NOTE: Your memory request of 65536.0M was likely submitted as 64.0G. Please note that Slurm interprets memory requests denominated in G as multiples of 1024M, not 1000M.
+salloc: Pending job allocation 18995784
+salloc: job 18995784 queued and waiting for resources
+salloc: job 18995784 has been allocated resources
+salloc: Granted job allocation 18995784
+salloc: Nodes fc20325 are ready for job
+
+(base) [francine@fc20325 ~]$ cd ~/scratch/W25/results
+(base) [francine@fc20325 results]$ ~/scratch/evalAdmix/evalAdmix -plink data -fname data.2.P -qname data.2.Q -o evaladmixOut.corres -P 10
+evalAdmix version 0.962
+/home/francine/scratch/evalAdmix/evalAdmix -plink data -fname data.2.P -qname data.2.Q -o evaladmixOut.corres -P 10 
+	-> Will assume these are the plink files:
+		bed: data.bed
+		bim: data.bim
+		fam: data.fam
+	-> Plink file contains 6998391 autosomale SNPs
+	-> reading genotypes 	-> Allocated: 0.952 gig memory
+ - done 
+		->K=2	nSites=6998391	nInd=68
+opening : data.2.Q with x=68 y=2
+opening : data.2.P with x=6998391 y=2
+Going to calcualte normal residuals
+Finished calculating normal residuals
+Correcting frequencies with 10 threads...
+Finished, going to write all correlations
+Correlation matrix has been written to evaladmixOut.corres
+	[ALL done] cpu-time used =  865.22 sec
+	[ALL done] walltime used =  97.00 sec
+	[ALL done] results have been outputted to evaladmixOut.corres
+**correlation matrix that shows how much each SNP correlates with ancestry components
+
+**I don't quite understand what I have so that I can plot , and what am I plotting from which file ?
+
+node: fir fc20325
+path: /home/francine/scratch/W25
+$ cd ~/scratch/W25
+
+$ ls 
+data results
+* inside data is the link to the vcf file: oncNer.vcf
+
+(base) [francine@fc20325 W25]$ cd results
+(base) [francine@fc20325 results]$ ls
+cv_errors.txt  data.bim   data.nosex           plotADMIXTURE.r
+data.2.P       data.fam   data.tiff
+data.2.Q       data.list  evaladmixOut.corres
+data.bed       data.log   log2.out
+
+data.bed, data.bim, data.fam -> PLINK data input
+data.bed- Binary genotype
+data.2.Q -> ADMIXTURE ancestry proportions
+data.2.P -> ADMIXTURE allele frequencies
+data.log -> ADMIXTURE log file
+evaladmixOut.corres -> Correlation matrix from evalAdmix
+plotADMIXTURE.r -> R scrpit
+cv_errors.txt -> cross-validation errors - tell what K value is better
+data.nosex -> when sex info is missing
+data.list
+log2.out
+data.tiff
+
+
+
+
+
+
+
 
 
 
