@@ -1,0 +1,135 @@
+ssh francine@fir.computecanada.ca
+
+conda install -c bioconda admixture
+
+conda install -c bioconda plink   
+
+(base) [francine@login3 ~]$ ls
+def-sjsmith  miniconda3  Miniconda3-latest-Linux-x86_64.sh  nearline  projects  scratch
+(base) [francine@login3 def-sjsmith]$ ls
+francine_test  megan  prev_students  sjsmith  taylor
+(base) [francine@login3 def-sjsmith]$ cd francine_test
+(base) [francine@login3 francine_test]$ ls
+after.txt     a_tajima.Tajima.D  b_tajima.log           filt_before.log         fst_w.log                sockeye.vcf.gz
+a_hardy.hwe   before.txt         b_tajima.Tajima.D      filt_before.recode.vcf  fst_w.windowed.weir.fst
+a_hardy.log   b_hardy.hwe        filt_after.log         fst_sites.log           header_columns.csv
+a_tajima.log  b_hardy.log        filt_after.recode.vcf  fst_sites.weir.fst      oncNer.proj10.vcf
+(base) [francine@login3 francine_test]$ pwd
+/home/francine/def-sjsmith/francine_test
+(base) [francine@login3 francine_test]$ cd /scratch/francine
+$ mkdir W25
+$ cd W25
+mkdir data results
+(base) [francine@login3 W25]$ ln -s /home/francine/def-sjsmith/francine_test/oncNer.proj10.vcf data/oncNer.vcf
+(base) [francine@login3 W25]$ plink --vcf data/oncNer.vcf --make-bed --out results/data --allow-extra-chr --double-id  ( Megan helped and told me to add double id)
+
+**RESULTS:
+
+386531 MB RAM detected; reserving 193265 MB for main workspace.
+--vcf: results/data-temporary.bed + results/data-temporary.bim +
+results/data-temporary.fam written.
+6998391 variants loaded from .bim file.
+68 people (0 males, 0 females, 68 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to results/data.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 68 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.99099.
+6998391 variants and 68 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to results/data.bed + results/data.bim + results/data.fam ... done.
+(base) [francine@login3 W25]$ awk '{$1="0";print $0}' results/data.bim > results/data.bim.tmp
+mv results/data.bim.tmp results/data.bim
+
+**FOLLOW TUTORIAL:
+(base) [francine@login3 W25]$ cd /scratch/francine/W25/results
+(base) [francine@login3 results]$ admixture --cv data.bed 2 > log2.out
+(base) [francine@login3 results]$ ls
+data.2.P  data.2.Q  data.bed  data.bim  data.fam  data.log  data.nosex  log2.out
+
+** SHOULD HAVE USED K=3
+(base) [francine@login3 results]$ grep "CV" log*.out | awk '{print $3,$4}' | cut -c 4,7-20 > cv_errors.txt
+(base) [francine@login3 results]$ cat cv_errors.txt
+2 0.42286
+
+**FOLLOW TUTORIAL
+
+(base) [francine@login3 results]$ awk '{split($1,name,"."); print $1,name[2]}' data.nosex > data.list
+(base) [francine@login3 results]$ head data.list
+Oner_Bowron_2014_409.merged.dedup.bam merged
+Oner_Bowron_2014_411.merged.dedup.bam merged
+Oner_Bowron_2014_412.merged.dedup.bam merged
+Oner_Bowron_2014_414.merged.dedup.bam merged
+Oner_Bowron_2014_418.merged.dedup.bam merged
+
+**This is not correct, "merge" is not my species
+
+(base) [francine@login3 results]$ awk '{split($1,name,"_"); print $1,name[2]}' data.nosex > data.list
+(base) [francine@login3 results]$ head data.list
+Oner_Bowron_2014_409.merged.dedup.bam Bowron
+Oner_Bowron_2014_411.merged.dedup.bam Bowron
+Oner_Bowron_2014_412.merged.dedup.bam Bowron
+Oner_Bowron_2014_414.merged.dedup.bam Bowron
+
+** I think is working now 
+
+(base) [francine@login3 results]$ wget https://github.com/speciationgenomics/scripts/raw/master/plotADMIXTURE.r
+chmod +x plotADMIXTURE.r
+--2026-01-15 08:11:05--  https://github.com/speciationgenomics/scripts/raw/master/plotADMIXTURE.r
+Resolving github.com... 140.82.114.4
+Connecting to github.com|140.82.114.4|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/speciationgenomics/scripts/master/plotADMIXTURE.r [following]
+--2026-01-15 08:11:06--  https://raw.githubusercontent.com/speciationgenomics/scripts/master/plotADMIXTURE.r
+Resolving raw.githubusercontent.com... 185.199.111.133, 185.199.109.133, 185.199.108.133, ...
+Connecting to raw.githubusercontent.com|185.199.111.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4565 (4.5K) [text/plain]
+Saving to: ‘plotADMIXTURE.r’
+
+plotADMIXTURE.r                   100%[=============================================================>]   4.46K  --.-KB/s    in 0.002s  
+
+2026-01-15 08:11:06 (2.86 MB/s) - ‘plotADMIXTURE.r’ saved [4565/4565]
+
+(base) [francine@login3 results]$ Rscript plotADMIXTURE.r -p data -i data.list -k 2 -l Bowron
+[mii] Please select a module to run Rscript:
+       MODULE       PARENT(S)
+    1  r/4.5.0      StdEnv/2023
+    2  r/4.4.0      StdEnv/2023
+    3  r/4.3.1      StdEnv/2023
+    4  r/4.3.1      StdEnv/2020
+    5  r/4.2.2      StdEnv/2020
+    6  r/4.2.1      StdEnv/2020
+    7  r/4.1.2      StdEnv/2020
+    8  r/4.1.0      StdEnv/2020
+    9  r/4.0.5      StdEnv/2020
+    10 r/4.0.2      StdEnv/2020
+    11 r/4.0.0      StdEnv/2020
+    12 sagemath/9.3 StdEnv/2020
+Make a selection (1-12, q aborts) [1]: 1
+[mii] loading StdEnv/2023 r/4.5.0 ...
+Error in library("optparse") : there is no package called ‘optparse’
+Execution halted
+(base) [francine@login3 results]$ Rscript -e "install.packages('optparse')"
+[mii] Please select a module to run Rscript:
+       MODULE       PARENT(S)
+    1  r/4.5.0      StdEnv/2023
+    2  r/4.4.0      StdEnv/2023
+    3  r/4.3.1      StdEnv/2023
+    4  r/4.3.1      StdEnv/2020
+    5  r/4.2.2      StdEnv/2020
+    6  r/4.2.1      StdEnv/2020
+    7  r/4.1.2      StdEnv/2020
+    8  r/4.1.0      StdEnv/2020
+    9  r/4.0.5      StdEnv/2020
+    10 r/4.0.2      StdEnv/2020
+    11 r/4.0.0      StdEnv/2020
+    12 sagemath/9.3 StdEnv/2020
+Make a selection (1-12, q aborts) [1]: 1
+[mii] loading StdEnv/2023 r/4.5.0 ...
+Warning in install.packages("optparse") :
+  'lib = "/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v4/Compiler/gcccore/r/4.5.0/lib64/R/library"' is not writable
+Error in install.packages("optparse") : unable to install packages
+Execution halted
+
+** I don't know how to install this package to make this work 
