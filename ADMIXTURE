@@ -398,6 +398,25 @@ log2.out
 data.tiff
 
 admixture --cv data.bed 3 > log3.out
+ls
+cv_errors.txt  data.3.Q  data.list   evaladmixOut.corres
+data.2.P       data.bed  data.log    log2.out
+data.2.Q       data.bim  data.nosex  log3.out
+data.3.P       data.fam  data.tiff   plotADMIXTURE.r
+(base) [francine@fc20325 results]$ grep "CV" log*.out | awk '{print $3,$4}' | cut -c 4,7-20 > cv_errors.txt
+(base) [francine@fc20325 results]$ cat cv_errors.txt
+2 0.42286
+3 0.44709
+
+the smaller cv is the better K
+
+** Try the loop
+
+(base) [francine@fc20325 results]$ for i in {4..7}
+do
+ admixture --cv data.bed $i > log${i}.out
+done
+
 
 
 
