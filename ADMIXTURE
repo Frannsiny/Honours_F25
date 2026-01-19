@@ -417,6 +417,16 @@ do
  admixture --cv data.bed $i > log${i}.out
 done
 
+loop keeps crashing,
+ran one at the time instead
+
+(base) [francine@login1 results]$ grep "CV error" log*.out
+log2.out:CV error (K=2): 0.42286
+log3.out:CV error (K=3): 0.44709
+log4.out:CV error (K=4): 0.49138
+log5.out:CV error (K=5): 0.53850
+log6.out:CV error (K=6): 0.58326
+
 
 
 
