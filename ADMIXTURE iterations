@@ -1,0 +1,47 @@
+ssh francine@fir.computecanada.ca
+cd scratch/W25/results
+
+**Try to do the iterations
+? Need to specify different seeds manually? like I did for Levi?
+Got the same result without setting a seed, look for code to add seed
+
+$ admixture -s 100 --cv data.bed 3 > log3_i.out
+
+** my data output file overwrites the old K3 ( data.3.Q and data.3.P)
+use $ mv so I can rename but for now keep inside results
+
+$ mv data.3.Q data.3_i.Q
+$ mv data.3.P data.3_i.P
+
+If I want to do all in one go:
+
+$ admixture -s 100 --cv data.bed 3 > log3_i.out; mv data.3.Q data.3_i.Q; mv data.3.P data.3_i.P
+
+or 
+
+$ admixture -s 100 --cv data.bed 3 > log3_i.out [Shift+Enter]
+mv data.3.Q data.3_i.Q [Shift+Enter]
+mv data.3.P data.3_i.P [Enter]
+
+(base) [francine@login1 results]$ grep "CV error" log3.out log3_i.out
+log3.out:CV error (K=3): 0.44709
+log3_i.out:CV error (K=3): 0.44788
+(base) [francine@login1 results]$
+
+** Keep running a few more 
+$ admixture -s 200 --cv data.bed 3 > log3_ii.out; mv data.3.Q data.3_ii.Q; mv data.3.P data3_ii.P
+
+admixture -s 300 --cv data.bed 3 > log3_iii.out; mv data.3.Q data.3_iii.Q; mv data.3.P data3_iii.P
+
+admixture -s 400 --cv data.bed 3 > log3_iiii.out; mv data.3.Q data.3_iiii.Q; mv data.3.P data3_iiii.P
+
+admixture -s 500 --cv data.bed 3 > log3_v.out; mv data.3.Q data.3_v.Q; mv data.3.P data3_v.P
+
+(base) [francine@login1 results]$ grep "CV error" log3.out log3_i.out log3_ii.out log3_iii.out log3_iiii.out log3_v.out
+log3.out:CV error (K=3): 0.44709
+log3_i.out:CV error (K=3): 0.44788
+log3_ii.out:CV error (K=3): 0.44726
+log3_iii.out:CV error (K=3): 0.44760
+log3_iiii.out:CV error (K=3): 0.44751
+log3_v.out:CV error (K=3): 0.44700
+
