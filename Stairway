@@ -1,0 +1,95 @@
+$ ssh francine@fir.computecanada.ca
+$ cd scratch/W25
+$ mkdir stairway
+(base) [francine@login1 stairway]$ pwd
+/home/francine/scratch/W25/stairway
+
+* Need Java - How do I find which version 
+* search available modules inside compute canada
+$ module spider java
+ Versions:
+        java/1.8.0_292
+        java/11.0.22
+        java/17.0.6
+        java/21.0.1
+
+* Stairway readme file says I need 1.7 and above, pick 1.8
+$ module load java/1.8.0_292
+
+* Got to GitHub for stairway and get the code, copy HTTPS and use $ git clone
+
+$ git clone https://github.com/xiaoming-liu/stairway-plot-v2.git
+$ cd stairway-plot-v2
+$ ls -lh ( give me more details)
+-rw-r----- 1 francine francine 8.5K Jan 29 08:57 LICENSE.md
+-rw-r----- 1 francine francine  842 Jan 29 08:57 README.md
+-rw-r----- 1 francine francine 333K Jan 29 08:57 READMEv2.1.pdf
+-rw-r----- 1 francine francine  13K Jan 29 08:57 SFS_log_likelihood_problem_no_dim_penalty_fold.java
+-rw-r----- 1 francine francine  12K Jan 29 08:57 SFS_log_likelihood_problem_no_dim_penalty_unfold.java
+-rw-r----- 1 francine francine 9.6K Jan 29 08:57 Stairbuilder.java
+-rw-r----- 1 francine francine  11K Jan 29 08:57 Stairpainter.java
+-rw-r----- 1 francine francine  13K Jan 29 08:57 Stairway_fold_training_testing7.java
+-rw-r----- 1 francine francine  20K Jan 29 08:57 Stairway_output_summary_plot2.java
+-rw-r----- 1 francine francine 806K Jan 29 08:57 stairway_plot_v2.1.1.zip
+-rw-r----- 1 francine francine 806K Jan 29 08:57 stairway_plot_v2.1.2.zip
+drwxr-x--- 3 francine francine 4.0K Jan 29 08:57 stairway_plot_v2.1.3
+-rw-r----- 1 francine francine 806K Jan 29 08:57 stairway_plot_v2.1.3.zip
+-rw-r----- 1 francine francine 1.5M Jan 29 08:57 stairway_plot_v2.2.zip
+-rw-r----- 1 francine francine  13K Jan 29 08:57 Stairway_unfold_training_testing7.java
+
+$ cd stairway_plot_v2.1.3
+$ ls
+READMEv2.1.docx
+READMEv2.1.pdf
+stairway_plot_es
+two-epoch.blueprint
+two-epoch_fold.blueprint
+
+* ask sara which blueprint do I need , folded or unfolded?
+* I need folded
+
+*follow the readme file
+$ java -cp stairway_plot_es Stairbuilder two-epoch_fold.blueprint
+File: two-epoch_fold.blueprint.sh created
+
+$ bash two-epoch_fold.blueprint.sh
+.
+.
+.
+data finished dim=29
+write finished
+Thu 29 Jan 2026 09:18:25 AM PST
+
+(base) [francine@login1 stairway_plot_v2.1.3]$ ls
+READMEv2.1.docx   two-epoch.blueprint       two-epoch_fold.blueprint.plot.sh
+READMEv2.1.pdf    two-epoch_fold            two-epoch_fold.blueprint.sh
+stairway_plot_es  two-epoch_fold.blueprint
+
+* stairway_plot_es ( program folder)
+* two-epoch_fold ( output folder)
+
+$ cd two-epoch_fold
+(base) [francine@login1 two-epoch_fold]$ ls
+final                              two-epoch_fold.rand15.summary.png
+input                              two-epoch_fold.rand22.summary
+rand15                             two-epoch_fold.rand22.summary.pdf
+rand22                             two-epoch_fold.rand22.summary.png
+rand28                             two-epoch_fold.rand28.summary
+rand7                              two-epoch_fold.rand28.summary.pdf
+two-epoch_fold.final.summary       two-epoch_fold.rand28.summary.png
+two-epoch_fold.final.summary.pdf   two-epoch_fold.rand7.summary
+two-epoch_fold.final.summary.png   two-epoch_fold.rand7.summary.pdf
+two-epoch_fold.rand15.summary      two-epoch_fold.rand7.summary.png
+two-epoch_fold.rand15.summary.pdf
+(base) [francine@login1 two-epoch_fold]$ 
+
+* Open new window
+$ sftp francine@fir.computecanada.ca
+$ cd scratch/W25/stairway/stairway-plot-v2/stairway_plot_v2.1.3/two-epoch_fold/
+$ lcd desktop
+$ get two-epoch_fold.final.summary.pdf
+
+* I think it worked
+
+
+
