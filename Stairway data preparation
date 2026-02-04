@@ -1,0 +1,111 @@
+create 3 VCF files
+
+bowron 
+$ nano bowron.txt
+copy the list with full name from excel
+paste
+Ctrl+0 enter
+Ctrl+x
+
+$ cat bowron.txt
+
+Oner_Bowron_2014_409.merged.dedup.bam
+Oner_Bowron_2014_411.merged.dedup.bam
+Oner_Bowron_2014_412.merged.dedup.bam
+Oner_Bowron_2014_414.merged.dedup.bam
+Oner_Bowron_2014_418.merged.dedup.bam
+Oner_Bowron_2014_419.merged.dedup.bam
+Oner_Bowron_2014_431.merged.dedup.bam
+Oner_Bowron_2014_432.merged.dedup.bam
+Oner_Bowron_2014_433.merged.dedup.bam
+Oner_Bowron_2014_434.merged.dedup.bam
+Oner_Bowron_2020_380.merged.dedup.bam
+Oner_Bowron_2020_382.merged.dedup.bam
+Oner_Bowron_2020_384.merged.dedup.bam
+Oner_Bowron_2020_386.merged.dedup.bam
+Oner_Bowron_2020_388.merged.dedup.bam
+Oner_Bowron_2020_397.merged.dedup.bam
+Oner_Bowron_2020_398.merged.dedup.bam
+Oner_Bowron_2020_399.merged.dedup.bam
+Oner_Bowron_2020_404.merged.dedup.bam
+Oner_Bowron_2020_405.merged.dedup.bam
+Oner_Bowron_2020_408.merged.dedup.bam
+
+$ conda activate vcftools
+(vcftools) [francine@login3 data]$ vcftools --vcf oncNer.vcf --keep bowron.txt --recode --recode-INFO-all --out bowron
+Keeping individuals in 'keep' list
+After filtering, kept 21 out of 68 Individuals
+Outputting VCF file...
+After filtering, kept 6998391 out of a possible 6998391 Sites
+
+horsefly
+
+(vcftools) [francine@login3 data]$ nano horsefly.txt
+copy from excel list , paste , ctrl+o , enter , ctrl+x
+(vcftools) [francine@login3 data]$ cat horsefly.txt
+Oner_Horsefly_2018_531.merged.dedup.bam
+Oner_Horsefly_2018_533.merged.dedup.bam
+Oner_Horsefly_2018_534.merged.dedup.bam
+Oner_Horsefly_2018_535.merged.dedup.bam
+Oner_Horsefly_2018_536.merged.dedup.bam
+Oner_Horsefly_2018_538.merged.dedup.bam
+Oner_Horsefly_2018_539.merged.dedup.bam
+Oner_Horsefly_2018_541.merged.dedup.bam
+Oner_Horsefly_2018_543.merged.dedup.bam
+Oner_Horsefly_2019_455.merged.dedup.bam
+Oner_Horsefly_2019_458.merged.dedup.bam
+Oner_Horsefly_2019_459.merged.dedup.bam
+Oner_Horsefly_2019_461.merged.dedup.bam
+Oner_Horsefly_2019_463.merged.dedup.bam
+Oner_Horsefly_2019_469.merged.dedup.bam
+Oner_Horsefly_2019_470.merged.dedup.bam
+Oner_Horsefly_2019_471.merged.dedup.bam
+Oner_Horsefly_2019_472.merged.dedup.bam
+Oner_Horsefly_2019_473.merged.dedup.bam
+Oner_Horsefly_2021_494.merged.dedup.bam
+Oner_Horsefly_2021_496.merged.dedup.bam
+Oner_Horsefly_2021_501.merged.dedup.bam
+Oner_Horsefly_2021_507.merged.dedup.bam
+Oner_Horsefly_2021_514.merged.dedup.bam
+Oner_Horsefly_2021_524.merged.dedup.bam
+Keeping individuals in 'keep' list
+After filtering, kept 25 out of 68 Individuals
+Outputting VCF file...
+After filtering, kept 6998391 out of a possible 6998391 Sites
+
+Stelako
+(vcftools) [francine@login3 data]$ nano stelako.txt
+copy from excel, paste, ctrl+o , enter =, ctrl+x
+(vcftools) [francine@login3 data]$ cat stelako.txt
+Oner_Stellako_2014_299.merged.dedup.bam
+Oner_Stellako_2014_300.merged.dedup.bam
+Oner_Stellako_2014_302.merged.dedup.bam
+Oner_Stellako_2014_303.merged.dedup.bam
+Oner_Stellako_2014_304.merged.dedup.bam
+Oner_Stellako_2014_305.merged.dedup.bam
+Oner_Stellako_2014_306.merged.dedup.bam
+Oner_Stellako_2014_307.merged.dedup.bam
+Oner_Stellako_2014_310.merged.dedup.bam
+Oner_Stellako_2014_311.merged.dedup.bam
+Oner_Stellako_2014_312.merged.dedup.bam
+Oner_Stellako_2019_339.merged.dedup.bam
+Oner_Stellako_2019_343.merged.dedup.bam
+Oner_Stellako_2019_345.merged.dedup.bam
+Oner_Stellako_2019_349.merged.dedup.bam
+Oner_Stellako_2019_353.merged.dedup.bam
+Oner_Stellako_2019_365.merged.dedup.bam
+Oner_Stellako_2019_373.merged.dedup.bam
+Oner_Stellako_2019_374.merged.dedup.bam
+Oner_Stellako_2019_375.merged.dedup.bam
+Oner_Stellako_2019_377.merged.dedup.bam
+Oner_Stellako_2019_378.merged.dedup.bam
+(vcftools) [francine@login3 data]$ vcftools --vcf oncNer.vcf --keep stelako.txt --recode --recode-INFO-all --out stelako
+
+Keeping individuals in 'keep' list
+After filtering, kept 22 out of 68 Individuals
+Outputting VCF file...
+After filtering, kept 6998391 out of a possible 6998391 Sites
+
+(vcftools) [francine@login3 data]$ ls
+bowron.log         bowron.txt    horsefly.recode.vcf  oncNer.vcf   stelako.recode.vcf
+bowron.recode.vcf  horsefly.log  horsefly.txt         stelako.log  stelako.txt
