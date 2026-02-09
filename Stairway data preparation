@@ -109,3 +109,13 @@ After filtering, kept 6998391 out of a possible 6998391 Sites
 (vcftools) [francine@login3 data]$ ls
 bowron.log         bowron.txt    horsefly.recode.vcf  oncNer.vcf   stelako.recode.vcf
 bowron.recode.vcf  horsefly.log  horsefly.txt         stelako.log  stelako.txt
+
+# Allele count
+
+(vcftools) [francine@login1 data]$ vcftools --vcf oncNer.vcf --counts --out acount
+After filtering, kept 68 out of 68 Individuals
+Outputting Frequency Statistics...
+After filtering, kept 6998391 out of a possible 6998391 Sites
+Run Time = 25.00 seconds
+(vcftools) [francine@login1 data]$ 
+#output : acount.frq.count and acount.log
