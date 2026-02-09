@@ -1,0 +1,45 @@
+```{r}
+library(tidyverse)
+```
+
+## Calculate SFS
+
+```{r}
+# following Sara script 
+allele_count <- read_delim("oncNer_counts2.frq.count",delim = "\t",col_names = TRUE)
+#warning message:
+#One or more parsing issues, call `problems()` on your data frame for details, e.g.:
+ # dat <- vroom(...)
+  #problems(dat) 
+#
+#> View(allele_count)
+#> 
+#> # A tibble: 6,998,391 × 5
+#     row   col expected  actual    file                                                                       
+ #  <int> <int> <chr>     <chr>     <chr>                                                                      
+ #1     2     6 5 columns 6 columns /Users/francinecerbino/Desktop/HONOURS/Honours W26/oncNer_counts2.frq.count
+ #2     3     6 5 columns 6 columns /Users/francinecerbino/Desktop/HONOURS/Honours W26/oncNer_counts2.frq.count
+ #3     4     6 5 columns 6 columns /Users/francinecerbino/Desktop/HONOURS/Honours W26/oncNer_counts2.frq.count
+ #4     5     6 5 columns 6 columns /Users/francinecerbino/Desktop/HONOURS/Honours W26/oncNer_counts2.frq.count
+ #5     6     6 5 columns 6 columns /Users/francinecerbino/Desktop/HONOURS/Honours W26/oncNer_counts2.frq.count
+# ℹ 6,998,381 more rows
+# ℹ Use `print(n = ...)` to see more rows
+
+# Will ignore this for now
+# but I cannot follow the script because I dont have major and minor, so fix that
+
+```
+
+```{r}
+# separate the count column
+
+allele_sep <- allele_count %>%
+  separate( `{COUNT}`, into = c("MAJOR", "MINOR"), sep = " ")
+
+# error for every line , use tab
+
+allele_sep <- allele_count %>%
+  separate( `{COUNT}`, into = c("MAJOR", "MINOR"), sep = "\t")
+ #worked but I just noticed line 25 the smaler number is first so this is wrong
+
+```
