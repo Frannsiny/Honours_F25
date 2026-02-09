@@ -1,3 +1,22 @@
+Terminal 
+# Allele count
+# Sara github "# filter VCF for allele counts
+cd stairway
+cp ../hetAtr_stiNae_qc/hetAtr.filtered.vcf .
+vcftools --vcf hetAtr.filtered.vcf --max-missing 1 --min-alleles 2 --max-alleles 2 --remove-filtered-all --remove-indels --out hetAtr --counts2"
+
+
+vcftools --vcf oncNer.vcf --counts2 --out oncNer_counts2
+
+
+#New Window
+sftp francine@fir.computecanada.ca
+sftp> cd scratch/W25/data
+sftp> lcd Desktop
+sftp> get oncNer_counts2.frq.count
+
+RSTUDIO
+
 ```{r}
 library(tidyverse)
 ```
