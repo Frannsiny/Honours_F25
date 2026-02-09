@@ -119,3 +119,10 @@ After filtering, kept 6998391 out of a possible 6998391 Sites
 Run Time = 25.00 seconds
 (vcftools) [francine@login1 data]$ 
 #output : acount.frq.count and acount.log
+
+#New Window
+sftp francine@fir.computecanada.ca
+sftp> cd scratch/W25/data
+sftp> lcd Desktop
+sftp> get acount.frq.count
+Fetching /scratch/francine/W25/data/acount.frq.count to acount.frq.count
