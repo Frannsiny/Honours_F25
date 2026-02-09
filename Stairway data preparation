@@ -111,18 +111,18 @@ bowron.log         bowron.txt    horsefly.recode.vcf  oncNer.vcf   stelako.recod
 bowron.recode.vcf  horsefly.log  horsefly.txt         stelako.log  stelako.txt
 
 # Allele count
+# Sara github "# filter VCF for allele counts
+cd stairway
+cp ../hetAtr_stiNae_qc/hetAtr.filtered.vcf .
+vcftools --vcf hetAtr.filtered.vcf --max-missing 1 --min-alleles 2 --max-alleles 2 --remove-filtered-all --remove-indels --out hetAtr --counts2"
 
-(vcftools) [francine@login1 data]$ vcftools --vcf oncNer.vcf --counts --out acount
-After filtering, kept 68 out of 68 Individuals
-Outputting Frequency Statistics...
-After filtering, kept 6998391 out of a possible 6998391 Sites
-Run Time = 25.00 seconds
-(vcftools) [francine@login1 data]$ 
-#output : acount.frq.count and acount.log
+
+vcftools --vcf oncNer.vcf --counts2 --out oncNer_counts2
+
 
 #New Window
 sftp francine@fir.computecanada.ca
 sftp> cd scratch/W25/data
 sftp> lcd Desktop
-sftp> get acount.frq.count
-Fetching /scratch/francine/W25/data/acount.frq.count to acount.frq.count
+sftp> get oncNer_counts2.frq.count
+
