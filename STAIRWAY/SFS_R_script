@@ -5,7 +5,7 @@ cd stairway
 cp ../hetAtr_stiNae_qc/hetAtr.filtered.vcf .
 vcftools --vcf hetAtr.filtered.vcf --max-missing 1 --min-alleles 2 --max-alleles 2 --remove-filtered-all --remove-indels --out hetAtr --counts2"
 
-
+#Mine
 vcftools --vcf oncNer.vcf --counts2 --out oncNer_counts2
 
 
@@ -45,7 +45,7 @@ allele_count <- read_delim("oncNer_counts2.frq.count",delim = "\t",col_names = T
 # ℹ Use `print(n = ...)` to see more rows
 
 # Will ignore this for now
-# but I cannot follow the script because I dont have major and minor, so fix that
+# but I cannot follow the script because I don't have major and minor, so fix that
 
 ```
 
@@ -55,10 +55,10 @@ allele_count <- read_delim("oncNer_counts2.frq.count",delim = "\t",col_names = T
 allele_sep <- allele_count %>%
   separate( `{COUNT}`, into = c("MAJOR", "MINOR"), sep = " ")
 
-# error for every line , use tab
+# error for every line, use tab
 
 allele_sep <- allele_count %>%
   separate( `{COUNT}`, into = c("MAJOR", "MINOR"), sep = "\t")
- #worked but I just noticed line 25 the smaler number is first so this is wrong
+ #worked, but I just noticed line 25, the smaller number is first, so this is wrong I think 
 
 ```
