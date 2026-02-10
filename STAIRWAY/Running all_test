@@ -1,0 +1,89 @@
+-----------------------------------------------------------------------------
+(base) [francine@login1 ~]$ cd scratch
+(base) [francine@login1 scratch]$ ls
+evalAdmix  VCF_run_3  VCF_run_4  W25
+(base) [francine@login1 scratch]$ cd W25
+(base) [francine@login1 W25]$ ls
+data  results  stairway
+(base) [francine@login1 W25]$ cd stairway
+(base) [francine@login1 stairway]$ ls
+stairway-plot-v2
+(base) [francine@login1 stairway]$ cd stairway-plot-v2
+(base) [francine@login1 stairway-plot-v2]$ ls
+LICENSE.md
+README.md
+READMEv2.1.pdf
+SFS_log_likelihood_problem_no_dim_penalty_fold.java
+SFS_log_likelihood_problem_no_dim_penalty_unfold.java
+Stairbuilder.java
+Stairpainter.java
+Stairway_fold_training_testing7.java
+Stairway_output_summary_plot2.java
+stairway_plot_v2.1.1.zip
+stairway_plot_v2.1.2.zip
+stairway_plot_v2.1.3
+stairway_plot_v2.1.3.zip
+stairway_plot_v2.2.zip
+Stairway_unfold_training_testing7.java
+(base) [francine@login1 stairway-plot-v2]$ cd stairway_plot_v2.1.3
+(base) [francine@login1 stairway_plot_v2.1.3]$ ls
+READMEv2.1.docx   two-epoch.blueprint       two-epoch_fold.blueprint.plot.sh
+READMEv2.1.pdf    two-epoch_fold            two-epoch_fold.blueprint.sh
+stairway_plot_es  two-epoch_fold.blueprint
+(base) [francine@login1 stairway_plot_v2.1.3]$ nano all_test_fold.blueprint
+(base) [francine@login1 stairway_plot_v2.1.3]$ ls
+all_test_fold.blueprint  stairway_plot_es     two-epoch_fold.blueprint
+READMEv2.1.docx          two-epoch.blueprint  two-epoch_fold.blueprint.plot.sh
+READMEv2.1.pdf           two-epoch_fold       two-epoch_fold.blueprint.sh
+(base) [francine@login1 stairway_plot_v2.1.3]$ head -n 20 all_test_fold.blueprint
+grep -E "^(popid|nseq|L|whether_folded|project_dir|stairway_plot_dir):" all_test_fold.blueprint
+#input setting
+popid: all_test # id of the population (no white space)
+nseq: 136 # number of sequences
+L: 1754205526 # total number of observed nucleic sites, including polymorphic and monomorphic
+whether_folded: true # whethr the SFS is folded (true or false)
+SFS: 11091 12934 341320 330234 328149 315394 295950 273767 247281 220215 196872 177908 161639 150013 142012 135956 127991 122005 116993 111018 105881 100817 95622 91115 87221 82798 78752 77477 75469 74200 72715 71484 69716 68525 67116 66639 65833 63921 62578 60691 58625 56997 55460 54255 53575 53237 52913 52305 52433 52495 51946 51392 51010 51399 51774 51370 51426 51716 52421 52569 53146 53454 54337 56253 59263 66130 84684 117905 # snp frequency spectrum: number of singleton, number of doubleton, etc. (separated by white space)
+#smallest_size_of_SFS_bin_used_for_estimation: 1 # default is 1; to ignore singletons, uncomment this line and change this number to 2
+largest_size_of_SFS_bin_used_for_estimation: 68 # default is nseq/2 for folded SFS
+pct_training: 0.67 # percentage of sites for training
+nrand: 34	67 101	134 # number of random break points for each try (separated by white space) nseq-2/4 =33.5, nseq-2/2= 67, nseq-2*3/4= 100.5, nseq-2 . Have to round my values 
+project_dir: ./test # project directory
+stairway_plot_dir: ./stairway_plot_es # directory to the stairway plot files
+ninput: 200 # number of input files to be created for each estimation
+#random_seed: 6
+#output setting
+mu: 1.25e-8 # assumed mutation rate per site per generation this is the mean for atlantic salmon, and median is 8e-9
+year_per_generation: 4 # assumed generation time (in years)
+#plot setting
+plot_title: all_test # title of the plot
+xrange: 0.1,10000 # Time (1k year) range; format: xmin,xmax; "0,0" for default
+popid: all_test # id of the population (no white space)
+nseq: 136 # number of sequences
+L: 1754205526 # total number of observed nucleic sites, including polymorphic and monomorphic
+whether_folded: true # whethr the SFS is folded (true or false)
+project_dir: ./test # project directory
+stairway_plot_dir: ./stairway_plot_es # directory to the stairway plot files
+(base) [francine@login1 stairway_plot_v2.1.3]$ java -cp stairway_plot_es Stairbuilder all_test_fold.blueprint
+File: all_test_fold.blueprint.sh created
+Directory: ./test/ created
+Directory: ./test/input/ created
+Directory: ./test/rand34/ created
+Directory: ./test/rand67/ created
+Directory: ./test/rand101/ created
+Directory: ./test/rand134/ created
+(base) [francine@login1 stairway_plot_v2.1.3]$ ls
+all_test_fold.blueprint     two-epoch.blueprint
+all_test_fold.blueprint.sh  two-epoch_fold
+READMEv2.1.docx             two-epoch_fold.blueprint
+READMEv2.1.pdf              two-epoch_fold.blueprint.plot.sh
+stairway_plot_es            two-epoch_fold.blueprint.sh
+test
+(base) [francine@login1 stairway_plot_v2.1.3]$ bash all_test_fold.blueprint.sh
+Tue 10 Feb 2026 09:34:46 AM PST
+0
+0
+0
+0
+0
+0
+0
