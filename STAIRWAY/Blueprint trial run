@@ -12,7 +12,7 @@ largest_size_of_SFS_bin_used_for_estimation: 68 # default is nseq/2 for folded S
 pct_training: 0.67 # percentage of sites for training
 nrand: 34	67 101	134 # number of random break points for each try (separated by white space) nseq-2/4 =33.5, nseq-2/2= 67, nseq-2*3/4= 100.5, nseq-2 . Have to round my values 
 project_dir: ./test # project directory
-stairway_plot_dir: ./stairway-plot-v2 # directory to the stairway plot files
+stairway_plot_dir: ./stairway_plot_es # directory to the stairway plot files
 ninput: 200 # number of input files to be created for each estimation
 #random_seed: 6
 #output setting
