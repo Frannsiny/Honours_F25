@@ -1,0 +1,25 @@
+#example blueprint file
+#input setting
+popid: all_test # id of the population (no white space)
+nseq: 136 # number of sequences
+L: 1754205526 # total number of observed nucleic sites, including polymorphic and monomorphic
+whether_folded: true # whethr the SFS is folded (true or false)
+SFS: 11091 12934 341320 330234 328149 315394 295950 273767 247281 220215 196872 177908 161639 150013 142012 135956 127991 122005 116993 111018 105881 100817 95622 91115 87221 82798 78752 77477 75469 74200 72715 71484 69716 68525 67116 66639 65833 63921 62578 60691 58625 56997 55460 54255 53575 53237 52913 52305 52433 52495 51946 51392 51010 51399 51774 51370 51426 51716 52421 52569 53146 53454 54337 56253 59263 66130 84684 117905 # snp frequency spectrum: number of singleton, number of doubleton, etc. (separated by white space)
+#smallest_size_of_SFS_bin_used_for_estimation: 1 # default is 1; to ignore singletons, uncomment this line and change this number to 2
+largest_size_of_SFS_bin_used_for_estimation: 68 # default is nseq/2 for folded SFS
+pct_training: 0.67 # percentage of sites for training
+nrand: 34	67 101	134 # number of random break points for each try (separated by white space) nseq-2/4 =33.5, nseq-2/2= 67, nseq-2*3/4= 100.5, nseq-2 . Have to round my values 
+project_dir: ./test # project directory
+stairway_plot_dir: ./stairway-plot-v2 # directory to the stairway plot files
+ninput: 200 # number of input files to be created for each estimation
+#random_seed: 6
+#output setting
+mu: 1.25e-8 # assumed mutation rate per site per generation this is the mean for atlantic salmon, and median is 8e-9
+year_per_generation: 4 # assumed generation time (in years)
+#plot setting
+plot_title: all_test # title of the plot
+xrange: 0.1,10000 # Time (1k year) range; format: xmin,xmax; "0,0" for default
+yrange: 0,0 # Ne (1k individual) range; format: xmin,xmax; "0,0" for default
+xspacing: 2 # X axis spacing
+yspacing: 2 # Y axis spacing
+fontsize: 12 # Font size
