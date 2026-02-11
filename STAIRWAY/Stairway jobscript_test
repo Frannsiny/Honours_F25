@@ -1,0 +1,35 @@
+(base) [francine@login1 stairway_plot_v2.1.3]$ nano run_stairway_testAll.sh
+
+in nano 
+#!/bin/bash
+#SBATCH -J stairway
+#SBATCH -o stairway_out
+#SBATCH -e stairway_err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=fcerb317@mtroyal.ca
+#SBATCH -n 1
+#SBATCH --mem 10000
+#SBATCH -t 3-23:00:00
+
+module load java
+chmod +x all_test_fold.blueprint.sh
+bash all_test_fold.blueprint.sh
+
+ctrl+o , enter ctrl+X
+
+(base) [francine@login1 stairway_plot_v2.1.3]$ sbatch run_stairway_testAll.sh
+Submitted batch job 22611327
+(base) [francine@login1 stairway_plot_v2.1.3]$ ls
+all_test_fold.blueprint     test
+all_test_fold.blueprint.sh  two-epoch.blueprint
+READMEv2.1.docx             two-epoch_fold
+READMEv2.1.pdf              two-epoch_fold.blueprint
+run_stairway_testAll.sh     two-epoch_fold.blueprint.plot.sh
+stairway_plot_es            two-epoch_fold.blueprint.sh
+(base) [francine@login1 stairway_plot_v2.1.3]$ squeue --user=francine
+          JOBID     USER      ACCOUNT           NAME  ST  TIME_LEFT NODES CPUS TRES_PER_N MIN_MEM NODELIST (REASON) 
+       22611327 francine def-sjsmith_       stairway  PD 3-23:00:00     1    1        N/A  10000M  (None) 
+(base) [francine@login1 stairway_plot_v2.1.3]$ squeue --user=francine
+          JOBID     USER      ACCOUNT           NAME  ST  TIME_LEFT NODES CPUS TRES_PER_N MIN_MEM NODELIST (REASON) 
+       22611327 francine def-sjsmith_       stairway   R 3-22:58:11     1    1        N/A  10000M fc20652 (None) 
+(base) [francine@login1 stairway_plot_v2.1.3]$
