@@ -1,0 +1,32 @@
+Inside stairway_plot_v2.1.3
+
+Create a file with the blueprint 
+$ nano all_test_2.blueprint
+
+In nano, copy the blueprint in here. This blueprint had adjusted the y-axis to 0,250 and the mu I changed to median 8 e-9
+
+Create jobscript
+$ nano run_stairway_testAll_2.sh
+
+in nano 
+#!/bin/bash
+#SBATCH -J stairway
+#SBATCH -o stairway_out
+#SBATCH -e stairway_err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=fcerb317@mtroyal.ca
+#SBATCH -n 1
+#SBATCH --mem 10000
+#SBATCH -t 1-23:00:00 # one day +23 hrs, or 12:00:00 for 12 hrs
+
+module load java
+chmod +x all_test_2.blueprint.sh
+bash all_test_2.blueprint.sh
+
+ctrl+o , enter ctrl+X
+
+$ sbatch run_stairway_testAll_2.sh
+Submitted batch job 23086465
+
+Check:
+$ squeue --user=francine
