@@ -429,6 +429,14 @@ log6.out:CV error (K=6): 0.58326
 log7.out:CV error (K=7): 0.62562
 
 
+After iterations I want to plot only K=3
+
+re-run K=3
+$ admixture --cv data.bed 3 > log3_clean.out
+
+Plot ( add -m 3 so that I only see K=3)
+Rscript plotADMIXTURE.r -p data -i data.list -k 3 -m 3 -l Bowron,Horsefly,Stellako
+
 
 
 
