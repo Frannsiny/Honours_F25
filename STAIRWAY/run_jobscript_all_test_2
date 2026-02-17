@@ -26,7 +26,14 @@ bash all_test_2.blueprint.sh
 ctrl+o , enter ctrl+X
 
 $ sbatch run_stairway_testAll_2.sh
-Submitted batch job 23086465
+Submitted batch job 23086465 - did not give me the pdf
+re submitted 
+Submitted batch job 23192757
 
 Check:
 $ squeue --user=francine
+
+$sftp 
+$cd scratch/W25/stairway/stairway-plot-v2/stairway_plot_v2.1.3/test
+$ lcd desktop
+$ get all_test.final.summary.pdf
