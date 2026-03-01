@@ -1,0 +1,33 @@
+Inside stairway_plot_v2.1.3
+
+Create a file with the blueprint 
+$ nano all_test_1b.blueprint
+
+In nano, copy the blueprint in here
+ctrl o , enter ctrl X
+
+create .sh
+(base) [francine@login1 stairway_plot_v2.1.3]$ java -cp stairway_plot_es Stairbuilder all_test_1b.blueprint
+File: all_test_1b.blueprint.sh created
+
+Create jobscript
+$ nano run_stairway_1b.sh
+
+#!/bin/bash
+#SBATCH -J stairway_1b
+#SBATCH -o stairway_1b.out
+#SBATCH -e stairway_1b.err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=fcerb317@mtroyal.ca
+#SBATCH -n 1
+#SBATCH --mem 10000
+#SBATCH -t 3-23:00:00
+
+module load java
+chmod +x all_test_1b.blueprint.sh
+bash all_test_1b.blueprint.sh
+
+ctrlO, enter, ctrlX
+
+(base) [francine@login1 stairway_plot_v2.1.3]$ sbatch run_stairway_1b.sh
+Submitted batch job 25202798
