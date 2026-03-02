@@ -1,0 +1,75 @@
+$ nano bowron.blueprint
+$ java -cp stairway_plot_es Stairbuilder bowron.blueprint
+
+$ nano run_stairway_bowron.sh
+
+#!/bin/bash
+#SBATCH -J stairway_bowron
+#SBATCH -o stairway_bowron.out
+#SBATCH -e stairway_bowron.err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=fcerb317@mtroyal.ca
+#SBATCH -n 1
+#SBATCH --mem 10000
+#SBATCH -t 3-23:00:00
+
+module load java
+chmod +x bowron.blueprint.sh
+bash bowron.blueprint.sh
+
+$ sbatch run_stairway_bowron.sh
+Submitted batch job 25294557
+
+HORSEFLY
+
+$ nano horsefly.blueprint
+$ java -cp stairway_plot_es Stairbuilder horsefly.blueprint
+
+$ nano run_stairway_horsefly.sh
+
+#!/bin/bash
+#SBATCH -J stairway_horsefly
+#SBATCH -o stairway_horsefly.out
+#SBATCH -e stairway_horsefly.err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=fcerb317@mtroyal.ca
+#SBATCH -n 1
+#SBATCH --mem 10000
+#SBATCH -t 3-23:00:00
+
+module load java
+chmod +x horsefly.blueprint.sh
+bash horsefly.blueprint.sh
+
+$ sbatch run_stairway_horsefly.sh
+
+STELAKO
+$ nano stelako.blueprint
+$ java -cp stairway_plot_es Stairbuilder stelako.blueprint
+
+$ nano run_stairway_stelako.sh
+
+#!/bin/bash
+#SBATCH -J stairway_stelako
+#SBATCH -o stairway_stelako.out
+#SBATCH -e stairway_stelako.err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=fcerb317@mtroyal.ca
+#SBATCH -n 1
+#SBATCH --mem 10000
+#SBATCH -t 3-23:00:00
+
+module load java
+chmod +x stelako.blueprint.sh
+bash stelako.blueprint.sh
+
+$ sbatch run_stairway_stelako.sh
+
+$ squeue --user=francine
+
+
+(base) [francine@login3 stairway_plot_v2.1.3]$ squeue --user=francine
+          JOBID     USER      ACCOUNT           NAME  ST  TIME_LEFT NODES CPUS TRES_PER_N MIN_MEM NODELIST (REASON) 
+       25294557 francine def-sjsmith_ stairway_bowro   R 3-22:53:56     1    1        N/A  10000M fc30118 (None) 
+       25294983 francine def-sjsmith_ stairway_horse  PD 3-23:00:00     1    1        N/A  10000M  (None) 
+       25295044 francine def-sjsmith_ stairway_stela  PD 3-23:00:00     1    1        N/A  10000M  (None)
