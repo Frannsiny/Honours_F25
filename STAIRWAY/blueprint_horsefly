@@ -8,7 +8,7 @@ SFS: 520848 617883 622107 517998 424946 357243 308501 270430 244740 222592 20412
 #smallest_size_of_SFS_bin_used_for_estimation: 1 # default is 1; to ignore singletons, uncomment this line and change this number to 2
 largest_size_of_SFS_bin_used_for_estimation: 25 # default is nseq/2 for folded SFS
 pct_training: 0.67 # percentage of sites for training
-nrand: 12 24 36 48 # number of random break points for each try (separated by white space) nseq-2/4 =33.5, nseq-2/2= 67, nseq-2*3/4= 100.5, nseq-2 . Have to round my values 
+nrand: 12 24 36 48 # number of random break points for each try (separated by white space) nseq-2/4 , nseq-2/2, nseq-2*3/4, nseq-2 . Have to round my values 
 project_dir: ./test # project directory
 stairway_plot_dir: ./stairway_plot_es # directory to the stairway plot files
 ninput: 200 # number of input files to be created for each estimation
