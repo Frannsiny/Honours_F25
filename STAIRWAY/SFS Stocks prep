@@ -1,0 +1,33 @@
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+MacBook-Air-9:~ francinecerbino$ sftp francine@fir.computecanada.ca
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+(francine@fir.computecanada.ca) Password: 
+
+
+
+$ conda activate vcftools
+$ cd scratch/W25/data
+$ vcftools --vcf bowron.recode.vcf  --counts2 --out bowron_counts2
+$ vcftools --vcf stelako.recode.vcf --counts2 --out stelako_counts2
+$ vcftools --vcf horsefly.recode.vcf --counts2 --out horsefly_counts2
+
+(vcftools) [francine@login1 data]$ ls
+acount.frq.count          bowron.recode.vcf           horsefly.recode.vcf       stelako_counts2.frq.count
+acount.log                bowron.txt                  horsefly.txt              stelako_counts2.log
+bowron_counts2.frq.count  horsefly_counts2.frq.count  oncNer_counts2.frq.count  stelako.log
+bowron_counts2.log        horsefly_counts2.log        oncNer_counts2.log        stelako.recode.vcf
+bowron.log                horsefly.log                oncNer.vcf                stelako.txt
+
+#New Window
+sftp francine@fir.computecanada.ca
+sftp> lcd
+sftp> lcd Desktop
+sftp> get bowron_counts2.frq.count
+sftp> get horsefly_counts2.frq.count
+sftp> get stelako_counts2.frq.count
+
+completed SFS on R STUDIO
