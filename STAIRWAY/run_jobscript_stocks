@@ -73,3 +73,18 @@ $ squeue --user=francine
        25294557 francine def-sjsmith_ stairway_bowro   R 3-22:53:56     1    1        N/A  10000M fc30118 (None) 
        25294983 francine def-sjsmith_ stairway_horse  PD 3-23:00:00     1    1        N/A  10000M  (None) 
        25295044 francine def-sjsmith_ stairway_stela  PD 3-23:00:00     1    1        N/A  10000M  (None)
+
+New window
+
+sftp> cd /home/francine/scratch/W25/stairway/stairway-plot-v2/stairway_plot_v2.1.3/stelako
+sftp lcd Desktop
+sftp> get stelako.final.summary.pdf
+
+repeat to each stock
+
+sftp> cd /scratch/francine/W25/stairway/stairway-plot-v2/stairway_plot_v2.1.3/bowron
+sftp> get bowron.final.summary.pdf
+
+sftp> cd /home/francine/scratch/W25/stairway/stairway-plot-v2/stairway_plot_v2.1.3/horsefly
+sftp> get horsefly.final.summary.pdf
+
