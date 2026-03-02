@@ -1,0 +1,25 @@
+#example blueprint file
+#input setting
+popid: stelako # id of the population (no white space)
+nseq: 44 # number of sequences ( 2N ) I have 22 INDV
+L: 1754205526 # total number of observed nucleic sites, including polymorphic and monomorphic
+whether_folded: true # whethr the SFS is folded (true or false)
+SFS: 605968 661814 633525 515204 423272 356173 306179 269389 241921 220396 205625 193338 181724 171536 165776 160365 156561 154708 156054 162888 185889 217270 # snp frequency spectrum: number of singleton, number of doubleton, etc. (separated by white space)
+#smallest_size_of_SFS_bin_used_for_estimation: 1 # default is 1; to ignore singletons, uncomment this line and change this number to 2
+largest_size_of_SFS_bin_used_for_estimation: 22 # default is nseq/2 for folded SFS
+pct_training: 0.67 # percentage of sites for training
+nrand: 11 21 32 42 # number of random break points for each try (separated by white space) nseq-2/4 , nseq-2/2, nseq-2*3/4, nseq-2 . Have to round my values 
+project_dir: ./test # project directory
+stairway_plot_dir: ./stairway_plot_es # directory to the stairway plot files
+ninput: 200 # number of input files to be created for each estimation
+#random_seed: 6
+#output setting
+mu: 1.25e-8 # assumed mutation rate per site per generation this is the mean for atlantic salmon, and median is 8e-9
+year_per_generation: 4 # assumed generation time (in years)
+#plot setting
+plot_title: stelako # title of the plot
+xrange: 0.1,10000 # Time (1k year) range; format: xmin,xmax; "0,0" for default
+yrange: 0,0 # Ne (1k individual) range; format: xmin,xmax; "0,0" for default
+xspacing: 2 # X axis spacing
+yspacing: 2 # Y axis spacing
+fontsize: 12 # Font size
